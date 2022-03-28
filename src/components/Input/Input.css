@@ -1,0 +1,33 @@
+.input {
+    position: relative;
+    width: 450px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 13px 16px;
+    background: #FAFBFC;
+    border: 1px solid #DCE1E6;
+    border-radius: 0 0 4px 4px;
+}
+
+.input__field {
+    width: 100%;
+    padding: 9px 0 9px 9px;
+    background: #FFFFFF;
+    border: 1px solid #D3D9DE;
+    border-radius: 6px;
+}
+
+.input__field:empty::before {
+    content: attr(placeholder);
+    color: #828282;
+    cursor: text;
+}
+
+.input__marker {
+    font-weight: 600;
+    font-size: 13px;
+    background: linear-gradient(135deg, #2EE6A8 0%, #3399FF 34.37%, #9933FF 69.27%, #FF3399 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
