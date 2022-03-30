@@ -5,22 +5,27 @@
     flex-direction: row;
     align-items: center;
     padding: 13px 16px;
-    background: #FAFBFC;
-    border: 1px solid #DCE1E6;
+    background: var(--gray-1);
+    border: 1px solid var(--gray-2);
     border-radius: 0 0 4px 4px;
+    margin-bottom: 30px;
 }
 
 .input__field {
     width: 100%;
     padding: 9px 0 9px 9px;
-    background: #FFFFFF;
-    border: 1px solid #D3D9DE;
+    background: var(--gray-0);
+    border: 1px solid var(--gray-3);
     border-radius: 6px;
+}
+
+.input__field:focus:empty::before {
+    color: var(--lightgray-placeholder);
 }
 
 .input__field:empty::before {
     content: attr(placeholder);
-    color: #828282;
+    color: var(--gray-placeholder);
     cursor: text;
 }
 

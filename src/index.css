@@ -1,12 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap');
 
 :root {
-  --border-gray: #c5d0db;
-  --placeholder-gray: #828282;
-  --emoji-btn: #b9bdc5;
-  --emoji-box-bg: #ebeef2;
-  --emoji-box-border: #C5D0DB;
-  --scrollbar-color: #DAE2EA;
+  --gray-0: #FFF;
+  --gray-1: #FAFBFC;
+  --gray-2: #DCE1E6;
+  --gray-3: #D3D9DE;
+  --gray-4: #DAE2EA;
+
+  --blue-1: #5181b8;
+
+  --gray-placeholder: #828282;
+  --lightgray-placeholder: #AFAFAF;
+  --background-color: #EDEEF0;
+  --tint-color: #F0F2F5;
+
+  --text-secondary: #99A2AD;
 }
 
 * {
@@ -22,7 +30,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #edeef0;
+  background: var(--background-color);
 }
 
 

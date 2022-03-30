@@ -6,7 +6,7 @@ import { useDebounce } from '../../hooks/useDebounce';
 
 // @ts-ignore
 import { CSSTransition } from 'react-transition-group';
-import './GifPicker.css'
+import './GifPicker.css';
 import { IGif } from '@giphy/js-types';
 
 type GifPickerProps = {
@@ -22,7 +22,7 @@ export const GifPicker: React.FC<GifPickerProps> = ({ searchQuery }) => {
     try {
       const { data }: Result = await request('search', {
         method: 'GET',
-        urlParams: { q: debouncedSearchQuery, limit: 10 },
+        urlParams: { q: debouncedSearchQuery, limit: 20 },
       });
       setGifs(data);
     } catch (e) {
@@ -37,13 +37,13 @@ export const GifPicker: React.FC<GifPickerProps> = ({ searchQuery }) => {
   }, [loadGifs, debouncedSearchQuery]);
 
   return (
-    <CSSTransition in={!!debouncedSearchQuery} timeout={200} classNames='gif-picker'>
-      <div className='gif-picker'>
+    <CSSTransition classNames='gif-picker' in={!!debouncedSearchQuery} timeout={300} unmountOnExit>
+      <div className='gif-picker' area-label='Выбор gif изображения'>
         <div className='gif-picker__viewport'>
           <Grid
             width={390}
             columns={3}
-            gap={10}
+            gap={9}
             gifs={gifs}
           />
         </div>

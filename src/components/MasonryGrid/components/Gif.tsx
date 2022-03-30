@@ -1,5 +1,7 @@
 import { IGif, IImage } from '@giphy/js-types';
 import { useRef, useState } from 'react';
+import { useMessagesContext } from '../../../hooks/useMessagesContext';
+import './Gif.css';
 
 const placeholder = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 
@@ -45,7 +47,7 @@ const findBestfit = (
   }
   // find the closest area of the filtered renditions
   return closestArea(width, height, testRenditions);
-}
+};
 
 export function pick<T extends object, U extends keyof T>(object: T, pick: Array<U>): Pick<T, U> {
   const res: Partial<T> = {};
@@ -87,45 +89,29 @@ export const getGifHeight = ({ images }: IGif, gifWidth: number) => {
   return 0;
 };
 
-const noop = () => {};
+const noop = () => {
+};
 
 type GifProps = {
   gif: IGif,
-
+  width: number,
+  style?: any
 }
 
 export const Gif = ({
                       gif,
                       width,
-                      height: forcedHeight,
-                      className = '',
-                      backgroundColor,
                       style,
-                      tabIndex,
-                    }: any) => {
+                    }: GifProps) => {
   // only fire seen once per gif id
   const [hasFiredSeen, setHasFiredSeen] = useState(false);
   // hovered is for the gif overlay
   const [isHovered, setHovered] = useState(false);
-  // only show the gif if it's on the screen
-  // if we can't use the dom (SSR), then we show the gif by default
-  const [shouldShowMedia, setShouldShowMedia] = useState(true);
-  // classname to target animations on image load
-  const [loadedClassname, setLoadedClassName] = useState('');
-  // the background color shouldn't change unless it comes from a prop or we have a sticker
   const defaultBgColor = useRef(getRandomColor());
-  // the a tag the media is rendered into
   const container = useRef<HTMLDivElement | null>(null);
-  // to play it safe when using SSR, we check image.complete after mount
   const image = useRef<HTMLImageElement | null>(null);
-  // intersection observer with no threshold
-  const showGifObserver = useRef<IntersectionObserver>();
-  // intersection observer with a threshold of 1 (full element is on screen)
-  const fullGifObserver = useRef<IntersectionObserver>();
-  // fire hover pingback after this timeout
-  const hoverTimeout = useRef<number>();
-  // fire onseen ref (changes per gif, so need a ref)
-  const sendOnSeen = useRef<(_: IntersectionObserverEntry) => void>(noop);
+
+  const { addMessage } = useMessagesContext();
 
   // const onMouseOver = (e: SyntheticEvent<HTMLElement, Event>) => {
   //   clearTimeout(hoverTimeout.current!)
@@ -135,30 +121,12 @@ export const Gif = ({
   //     pingback.onGifHover(gif, user?.id, e.target as HTMLElement, attributes)
   //   }, hoverTimeoutDelay)
   // }
-  //
-  // useEffect(() => {
-  //   // the id has changed, maybe the image has loaded
-  //   if (image.current?.complete) {
-  //     watchGif()
-  //     onGifVisible(gif) // gif is visible, perhaps just partially
-  //   }
-  //   fullGifObserver.current?.disconnect()
-  //   setHasFiredSeen(false)
-  //   // We only want to fire this when gif id changes
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [gif.id])
 
-  const height = forcedHeight || getGifHeight(gif, width);
+  const height = getGifHeight(gif, width);
   const bestSize = getBestSize(gif.images, width, height);
-  console.log(bestSize);
   // @ts-ignore
   const rendition = gif.images[bestSize.sizeName];
-  const background =
-    backgroundColor || // <- specified background prop
-    // sticker has black if no backgroundColor is specified
-    (gif.is_sticker
-      ? `url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADgAAAA4AQMAAACSSKldAAAABlBMVEUhIiIWFhYoSqvJAAAAGElEQVQY02MAAv7///8PWxqIPwDZw5UGABtgwz2xhFKxAAAAAElFTkSuQmCC') 0 0`
-      : defaultBgColor.current);
+  const background = defaultBgColor.current;
 
   return (
     <div
@@ -167,21 +135,22 @@ export const Gif = ({
         height,
         ...style,
       }}
-      tabIndex={tabIndex}
+      tabIndex={0}
+      onClick={() => {
+        addMessage({ gif, created: new Date(), id: Date.now() }); // FIXME
+      }}
     >
       <div style={{ width, height, position: 'relative' }} ref={container}>
         <picture>
-          <source type='image/webp' srcSet={shouldShowMedia ? rendition.webp : placeholder} />
+          <source type='image/webp' srcSet={rendition.webp} />
           <img
             ref={image}
-            src={shouldShowMedia ? rendition.url : placeholder}
+            src={rendition.ur}
             style={{ background }}
             width={width}
             height={height}
             alt={gif.title}
             className='gif'
-            onLoad={shouldShowMedia ? () => console.log('load') : () => {
-            }}
           />
         </picture>
       </div>

@@ -1,0 +1,36 @@
+.message {
+    position: relative;
+    display: flex;
+    align-items: end;
+    padding: 10px 16px 10px 30px;
+    cursor: pointer;
+}
+.message--selected {
+    background-color: var(--tint-color);
+}
+
+.message__content {
+    flex: 1 1 90%;
+}
+
+.message__timestamp {
+    flex: 0 1 10%;
+    color: var(--text-secondary);
+}
+
+.message__check {
+    position: absolute;
+    top: 10px;
+    left: 8px;
+    color: var(--blue-1);
+    opacity: 0;
+}
+.message:hover > .message__check {
+    opacity: 0.6;
+}
+.message--selected:hover > .message__check {
+    opacity: 1;
+}
+.message__check--selected {
+    opacity: 1;
+}
