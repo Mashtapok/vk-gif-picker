@@ -1,30 +1,12 @@
 import { IGif } from '@giphy/js-types';
 import React, { GetDerivedStateFromProps, PureComponent } from 'react';
+import { getGifHeight } from '../../helpers/gifs';
 import { Gif } from './components/Gif';
 import { MasonryGrid } from './components/MasonryGrid';
 
-
-const defaultProps = Object.freeze({ gap: 6, user: {}, initialGifs: [] });
-
-const getGifHeight = ({ images }: IGif, gifWidth: number) => {
-  const { fixed_width } = images;
-  if (fixed_width) {
-    const { width, height } = fixed_width;
-    const aspectRatio = width / height;
-    return Math.round(gifWidth / aspectRatio);
-  }
-  return 0;
-};
-
-// const itemHeights = images.map((gif) => getGifHeight(gif, gifWidth))
-
 type State = {
   gifWidth: number
-  isFetching: boolean
-  isError: boolean
   gifs: IGif[]
-  isLoaderVisible: boolean
-  isDoneFetching: boolean
 }
 
 type GridProps = {
@@ -32,25 +14,16 @@ type GridProps = {
   columns: number,
   width: number,
   gap: number,
+  clearInput: () => void
 }
 
 const initialState = Object.freeze({
-  isFetching: false,
-  isError: false,
   gifWidth: 0,
   gifs: [] as IGif[],
-  isLoaderVisible: false,
-  isDoneFetching: false,
 });
 
 export class Grid extends PureComponent<GridProps, State> {
-  static className = 'giphy-grid';
-  static loaderClassName = 'loader';
-  static fetchDebounce = 250;
-  static readonly defaultProps = defaultProps;
-  readonly state = { ...initialState, gifs: [] };
-  bricks?: any;
-  el?: HTMLDivElement | null;
+  readonly state = { ...initialState };
   unmounted: boolean = false;
   // paginator = gifPaginator(this.props.fetchGifs, this.state.gifs)
   static getDerivedStateFromProps: GetDerivedStateFromProps<GridProps, State> = (
@@ -75,14 +48,16 @@ export class Grid extends PureComponent<GridProps, State> {
       columns,
       width,
       gap,
+      clearInput
     } = this.props;
 
-    const { gifWidth, isError, isDoneFetching } = this.state;
+    const { gifWidth } = this.state;
 
-    const showLoader = !isDoneFetching;
-    const isFirstLoad = gifs.length === 0;
+    // const isEmpty = gifs.length === 0;
+
     // Получаем высоты каждой гифки
     const itemHeights = gifs.map((gif) => getGifHeight(gif, gifWidth));
+
     return (
       <div style={{ width }}>
         <MasonryGrid
@@ -96,6 +71,7 @@ export class Grid extends PureComponent<GridProps, State> {
               gif={gif}
               key={gif.id}
               width={gifWidth}
+              clearInput={clearInput}
             />
           ))}
         </MasonryGrid>

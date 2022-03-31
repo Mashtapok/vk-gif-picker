@@ -1,4 +1,4 @@
-import { commandParser } from './parser';
+import { gifMarkerParser } from './parser';
 import { restoreCaretPosition, saveCaretPosition } from './caret';
 
 let parsedValues = [];
@@ -7,7 +7,7 @@ export const highlight = input => {
   const nodes = Array.from(input.childNodes).filter(node => node.nodeName !== 'BR');
 
   for (const node of nodes) {
-    parsedValues = commandParser(getTextContent(node));
+    parsedValues = gifMarkerParser(getTextContent(node));
     const fragment = document.createDocumentFragment();
 
     for (const block of parsedValues) {

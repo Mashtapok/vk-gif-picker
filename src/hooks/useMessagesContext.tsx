@@ -24,7 +24,7 @@ const MessagesProvider: React.FC<React.ReactNode> = ({ children }) => {
   const [selectedMessages, setSelectedMessages] = useState<IMessage[]>([]);
 
   const addMessage = (newMessage: IMessage): void => {
-    setMessages([newMessage, ...messages]);
+    setMessages([...messages, newMessage]);
   };
 
   const toggleSelection = (selectedMessage: IMessage): void => {

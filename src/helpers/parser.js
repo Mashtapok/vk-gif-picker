@@ -37,8 +37,8 @@ const createParser = ({ regexp, parseText, parseElement }) => {
   };
 };
 
-export const commandParser = createParser({
-  regexp: /\/gif+/giy,
+export const gifMarkerParser = createParser({
+  regexp: /\/gif\b/giy,
   parseText: value => [{ type: 'text', value }],
   parseElement: value => [{ type: 'marker', value }],
 });

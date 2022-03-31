@@ -1,7 +1,7 @@
 /**
  * Принимает число и 3 склонения слова (например, ['пункт', 'пункта', 'пунктов']). Возвращает слово с правильным склонением
- * @param {number} n
- * @param {[string]} words
+ * @param {number} number
+ * @param {[string]} arr
  * @returns {string}
  */
 export const getPlural = (number: number, arr: string[]): string => {

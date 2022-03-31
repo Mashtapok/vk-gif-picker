@@ -17,9 +17,3 @@ export interface Result {
 export interface ErrorResult {
   message?: string;
 }
-// export interface GifResult extends Result {
-//   data: IGif;
-// }
-// export interface GifsResult extends Result {
-//   data: IGif[];
-// }

@@ -1,5 +1,4 @@
-import React, { ReactNode } from 'react';
-import { StyleHTMLAttributes } from 'react';
+import React, { memo, ReactNode } from 'react';
 import { CSSProperties } from 'react';
 
 function fillArray(length: number) {
@@ -14,7 +13,7 @@ type MasonryGridProps = {
   itemWidth: number
 }
 
-export const MasonryGrid = React.memo(({
+export const MasonryGrid = memo(({
                                          columns,
                                          gap,
                                          itemWidth,
@@ -47,8 +46,10 @@ export const MasonryGrid = React.memo(({
       containerStyle.height = `${Math.max.apply(Math, columnHeights) - gap}px`;
 
       return result;
-    }
+    };
 
     return <div style={containerStyle}>{getChildren()}</div>;
   },
 );
+
+MasonryGrid.displayName = 'MasonryGrid';

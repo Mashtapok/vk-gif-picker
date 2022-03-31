@@ -1,9 +1,8 @@
 import { IGif, IImage } from '@giphy/js-types';
-import { useRef, useState } from 'react';
+import React, { useRef } from 'react';
+import { getRandomColor } from '../../../helpers/gifs';
 import { useMessagesContext } from '../../../hooks/useMessagesContext';
 import './Gif.css';
-
-const placeholder = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 
 const closestArea = (width: number, height: number, renditions: any[]) => {
   let currentBest = Infinity;
@@ -23,9 +22,6 @@ const closestArea = (width: number, height: number, renditions: any[]) => {
   });
   return result!;
 };
-
-export const GRID_COLORS = ['#a86868', '#41af82', '#8549c1', '#5486a0', '#fff35c'];
-export const getRandomColor = () => GRID_COLORS[Math.round(Math.random() * (GRID_COLORS.length - 1))];
 
 const findBestfit = (
   renditions: Array<IImage>,
@@ -89,24 +85,23 @@ export const getGifHeight = ({ images }: IGif, gifWidth: number) => {
   return 0;
 };
 
-const noop = () => {
-};
-
 type GifProps = {
   gif: IGif,
   width: number,
-  style?: any
+  style?: any,
+  clearInput: () => void
 }
 
 export const Gif = ({
                       gif,
                       width,
                       style,
+                      clearInput,
                     }: GifProps) => {
   // only fire seen once per gif id
-  const [hasFiredSeen, setHasFiredSeen] = useState(false);
-  // hovered is for the gif overlay
-  const [isHovered, setHovered] = useState(false);
+  // const [hasFiredSeen, setHasFiredSeen] = useState(false);
+  // // hovered is for the gif overlay
+  // const [isHovered, setHovered] = useState(false);
   const defaultBgColor = useRef(getRandomColor());
   const container = useRef<HTMLDivElement | null>(null);
   const image = useRef<HTMLImageElement | null>(null);
@@ -128,6 +123,11 @@ export const Gif = ({
   const rendition = gif.images[bestSize.sizeName];
   const background = defaultBgColor.current;
 
+  const onGifClick = () => {
+    clearInput();
+    addMessage({ gif, created: new Date(), id: Date.now() }); // FIXME
+  };
+
   return (
     <div
       style={{
@@ -136,13 +136,11 @@ export const Gif = ({
         ...style,
       }}
       tabIndex={0}
-      onClick={() => {
-        addMessage({ gif, created: new Date(), id: Date.now() }); // FIXME
-      }}
+      onClick={onGifClick}
     >
       <div style={{ width, height, position: 'relative' }} ref={container}>
         <picture>
-          <source type='image/webp' srcSet={rendition.webp} />
+          <source type="image/webp" srcSet={rendition.webp} />
           <img
             ref={image}
             src={rendition.ur}
@@ -150,7 +148,7 @@ export const Gif = ({
             width={width}
             height={height}
             alt={gif.title}
-            className='gif'
+            className="gif"
           />
         </picture>
       </div>

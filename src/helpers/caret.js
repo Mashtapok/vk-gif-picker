@@ -1,5 +1,6 @@
 import { getTextContent } from './highlight';
 
+// Сохраняет позицию курсора
 export const saveCaretPosition = input => {
   const range = window.getSelection().getRangeAt(0);
   const preCaretRange = range.cloneRange();
@@ -11,6 +12,7 @@ export const saveCaretPosition = input => {
 
   return nodes.map(getTextContent).join('').length;
 };
+
 
 const getCaretNodeAndOffset = (input, caretPosition) => {
   const nodes = Array.from(input.childNodes);
@@ -25,10 +27,10 @@ const getCaretNodeAndOffset = (input, caretPosition) => {
 
     spanLength += textLength;
   }
-
   return [];
 };
 
+// Устанавливает сохраненное положение курсора
 export const restoreCaretPosition = (input, caretPosition) => {
   const [node, offset] = getCaretNodeAndOffset(input, caretPosition);
 

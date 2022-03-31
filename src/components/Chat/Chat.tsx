@@ -5,7 +5,7 @@ import { History } from '../History/History';
 
 export const Chat = () => {
   return (
-    <div className='chat'>
+    <div className="chat">
       <History />
       <Input />
     </div>

@@ -8,37 +8,38 @@ import { restoreCaretPosition, saveCaretPosition } from '../../helpers/caret';
 export const Input: FC = () => {
   const inputRef = useRef<HTMLDivElement>(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [html, setHtml] = useState('');
   // Сохраняем позицию курсора на onBlur и восстанавливаем на onFocus
   const [caretPosition, setCaretPosition] = useState(0);
 
+  const clearInput = () => {
+    if (inputRef.current) {
+      inputRef.current.innerHTML = '';
+      setSearchQuery('');
+    }
+  };
+
   useEffect(() => {
     if (inputRef.current) {
-      inputRef.current.focus(); // FIXME: КУРСОР при TAB ставится в начало, а надо в нужное место
+      inputRef.current.focus();
     }
   }, []);
 
   return (
-    <div className='input'>
-      <GifPicker searchQuery={searchQuery} />
+    <div className="input">
+      <GifPicker searchQuery={searchQuery} clearInput={clearInput} />
       <div
         ref={inputRef}
         contentEditable
-        className='input__field'
-        placeholder='Напишите сообщение...'
-        role='textbox'
+        className="input__field"
+        placeholder="Напишите сообщение..."
+        role="textbox"
         tabIndex={0}
         onKeyPress={(e) => {
           if (e.code === 'NumpadAdd') {
             e.preventDefault();
-            if (inputRef.current) {
-              inputRef.current.innerHTML = '';
-              setSearchQuery('');
-            }
+            clearInput();
           }
         }}
-        onPaste={e => console.log(e.clipboardData.getData('text'))}
-        // dangerouslySetInnerHTML={{ __html: html }}
         onFocus={({ currentTarget }) => {
           restoreCaretPosition(currentTarget, caretPosition);
         }}
@@ -48,13 +49,6 @@ export const Input: FC = () => {
         }}
         onInput={e => {
           const nodes = highlight(e.currentTarget);
-
-          // //
-          // setHtml(nodes.map(({ outerHTML, nodeName, textContent }) => {
-          //   if (nodeName === '#text') return textContent;
-          //   return outerHTML;
-          // }).join(''));
-          // //
 
           if (nodes.find(({ nodeName }) => nodeName === 'SPAN')) {
             const searchText = nodes.find(({ nodeName }) => nodeName === '#text')?.textContent;
