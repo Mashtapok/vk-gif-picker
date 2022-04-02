@@ -19,6 +19,10 @@
     border-radius: 6px;
 }
 
+.input__field:focus {
+    outline: none;
+}
+
 .input__field:focus:empty::before {
     color: var(--lightgray-placeholder);
 }

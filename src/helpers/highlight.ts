@@ -1,9 +1,9 @@
-import { gifMarkerParser } from './parser';
+import { gifMarkerParser, ParsedNodeType } from "./parser";
 import { restoreCaretPosition, saveCaretPosition } from './caret';
 
 let parsedValues = [];
 
-export const highlight = input => {
+export const highlight = (input: HTMLDivElement) => {
   const nodes = Array.from(input.childNodes).filter(node => node.nodeName !== 'BR');
 
   for (const node of nodes) {
@@ -11,6 +11,7 @@ export const highlight = input => {
     const fragment = document.createDocumentFragment();
 
     for (const block of parsedValues) {
+      // @ts-ignore
       const element = createHtmlElement[block.type](block);
       fragment.append(element);
     }
@@ -23,7 +24,7 @@ export const highlight = input => {
   return nodes;
 };
 
-export const getTextContent = node => {
+export const getTextContent = (node: any): string => {
   if (node.nodeName === '#text') return node.data.replace(/\n/g, '');
   if (node.nodeName === 'BR') return '\n';
   if (node.nodeName === 'IMG') return node.alt;
@@ -31,7 +32,7 @@ export const getTextContent = node => {
   return [...node.childNodes].map(getTextContent).join('');
 };
 
-const createSpan = content => {
+const createSpan = (content: string): HTMLSpanElement => {
   const span = document.createElement('span');
 
   span.innerText = content;
@@ -41,6 +42,6 @@ const createSpan = content => {
 };
 
 const createHtmlElement = {
-  marker: block => createSpan(block.value),
-  text: block => block.value,
+  marker: (block: ParsedNodeType) => createSpan(block.value),
+  text: (block: ParsedNodeType) => block.value,
 };

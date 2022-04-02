@@ -1,20 +1,20 @@
-import { getTextContent } from './highlight';
+import { getTextContent } from "./highlight";
 
 // Сохраняет позицию курсора
-export const saveCaretPosition = input => {
-  const range = window.getSelection().getRangeAt(0);
+export const saveCaretPosition = (input: HTMLDivElement) => {
+  const range = window.getSelection()!.getRangeAt(0);
   const preCaretRange = range.cloneRange();
 
   preCaretRange.selectNodeContents(input);
   preCaretRange.setEnd(range.endContainer, range.endOffset);
 
-  const nodes = [...preCaretRange.cloneContents().childNodes];
+  const nodes = Array.from(preCaretRange.cloneContents().childNodes);
 
-  return nodes.map(getTextContent).join('').length;
+  return nodes.map(getTextContent).join("").length;
 };
 
 
-const getCaretNodeAndOffset = (input, caretPosition) => {
+const getCaretNodeAndOffset = (input: HTMLDivElement, caretPosition: number) => {
   const nodes = Array.from(input.childNodes);
   let spanLength = 0;
 
@@ -31,14 +31,14 @@ const getCaretNodeAndOffset = (input, caretPosition) => {
 };
 
 // Устанавливает сохраненное положение курсора
-export const restoreCaretPosition = (input, caretPosition) => {
-  const [node, offset] = getCaretNodeAndOffset(input, caretPosition);
+export const restoreCaretPosition = (input: HTMLDivElement, caretPosition: number) => {
+  const [node, offset]: any = getCaretNodeAndOffset(input, caretPosition);
 
   if (node) {
-    const range = window.getSelection().getRangeAt(0);
+    const range = window.getSelection()!.getRangeAt(0);
 
-    if (node.nodeName === 'IMG') {
-      range.setStartAfter(node, offset);
+    if (node.nodeName === "IMG") {
+      range.setStartAfter(node);
     } else if (node.nodeType === Node.TEXT_NODE) {
       range.setStart(node, offset);
     } else {

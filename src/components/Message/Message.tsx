@@ -16,9 +16,8 @@ export const Message: React.FC<IMessage> = ({ gif, text, created, id }) => {
   };
 
 
-  // Скролл до нового сообщения, чтобы оно было видно сразу после появления
+  // Скролл к новому, чтобы оно было видно сразу после появления
   useEffect(() => {
-    console.log("scroll");
     ref.current.scrollIntoView({ behavior: "smooth" });
   }, []);
 

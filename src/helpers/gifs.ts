@@ -6,10 +6,12 @@ export const getRandomColor = () => GRID_COLORS[Math.round(Math.random() * (GRID
 
 export const getGifHeight = ({ images }: IGif, gifWidth: number) => {
   const { fixed_width } = images;
+
   if (fixed_width) {
     const { width, height } = fixed_width;
     const aspectRatio = width / height;
     return Math.round(gifWidth / aspectRatio);
   }
+
   return 0;
 };

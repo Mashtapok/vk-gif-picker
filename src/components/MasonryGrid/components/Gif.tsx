@@ -1,8 +1,8 @@
-import { IGif, IImage } from '@giphy/js-types';
-import React, { useRef } from 'react';
-import { getRandomColor } from '../../../helpers/gifs';
-import { useMessagesContext } from '../../../hooks/useMessagesContext';
-import './Gif.css';
+import { IGif, IImage } from "@giphy/js-types";
+import React, { useRef } from "react";
+import { getRandomColor } from "../../../helpers/gifs";
+import { useMessagesContext } from "../../../hooks/useMessagesContext";
+import "./Gif.css";
 
 const closestArea = (width: number, height: number, renditions: any[]) => {
   let currentBest = Infinity;
@@ -61,11 +61,11 @@ export const getBestSize = (
   gifHeight: number,
 ) => {
   const matchedSizes = pick(images, [
-    'original',
-    'fixed_width',
-    'fixed_height',
-    'fixed_width_small',
-    'fixed_height_small',
+    "original",
+    "fixed_width",
+    "fixed_height",
+    "fixed_width_small",
+    "fixed_height_small",
   ]);
   const testImages = Object.entries(matchedSizes).map(([sizeName, val]: any) => ({
     sizeName,
@@ -98,10 +98,6 @@ export const Gif = ({
                       style,
                       clearInput,
                     }: GifProps) => {
-  // only fire seen once per gif id
-  // const [hasFiredSeen, setHasFiredSeen] = useState(false);
-  // // hovered is for the gif overlay
-  // const [isHovered, setHovered] = useState(false);
   const defaultBgColor = useRef(getRandomColor());
   const container = useRef<HTMLDivElement | null>(null);
   const image = useRef<HTMLImageElement | null>(null);
@@ -123,9 +119,16 @@ export const Gif = ({
   const rendition = gif.images[bestSize.sizeName];
   const background = defaultBgColor.current;
 
-  const onGifClick = () => {
+  const clickHandler = () => {
     clearInput();
     addMessage({ gif, created: new Date(), id: Date.now() }); // FIXME
+  };
+
+  const keyPressHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.code === "Enter") {
+      clearInput();
+      addMessage({ gif, created: new Date(), id: Date.now() }); // FIXME
+    }
   };
 
   return (
@@ -136,22 +139,23 @@ export const Gif = ({
         ...style,
       }}
       tabIndex={0}
-      onClick={onGifClick}
+      className="gif-container" ref={container}
+      onClick={clickHandler}
+      onKeyPress={keyPressHandler}
+      onFocus={e => console.log(e)}
     >
-      <div style={{ width, height, position: 'relative' }} ref={container}>
-        <picture>
-          <source type="image/webp" srcSet={rendition.webp} />
-          <img
-            ref={image}
-            src={rendition.ur}
-            style={{ background }}
-            width={width}
-            height={height}
-            alt={gif.title}
-            className="gif"
-          />
-        </picture>
-      </div>
+      <picture>
+        <source type="image/webp" srcSet={rendition.webp} />
+        <img
+          ref={image}
+          src={rendition.ur}
+          style={{ background }}
+          width={width}
+          height={height}
+          alt={gif.title}
+          className="gif"
+        />
+      </picture>
     </div>
   );
 };

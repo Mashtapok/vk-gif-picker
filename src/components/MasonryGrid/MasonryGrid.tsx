@@ -1,9 +1,4 @@
-import React, { memo, ReactNode } from 'react';
-import { CSSProperties } from 'react';
-
-function fillArray(length: number) {
-  return Array.apply(null, Array(length)).map((_, index) => 0);
-}
+import React, { CSSProperties, memo, ReactNode } from "react";
 
 type MasonryGridProps = {
   columns: number
@@ -14,13 +9,17 @@ type MasonryGridProps = {
 }
 
 export const MasonryGrid = memo(({
-                                         columns,
-                                         gap,
-                                         itemWidth,
-                                         itemHeights,
-                                         children,
-                                       }: MasonryGridProps) => {
+                                   columns,
+                                   gap,
+                                   itemWidth,
+                                   itemHeights,
+                                   children,
+                                 }: MasonryGridProps) => {
     const containerStyle: CSSProperties = {};
+
+    const fillArray = (length: number) => {
+      return Array.apply(null, Array(length)).map(() => 0);
+    };
 
     const getChildren = (): ReactNode => {
       let columnTarget: number;
@@ -28,7 +27,7 @@ export const MasonryGrid = memo(({
 
       const result = React.Children.map(children, (child: React.ReactNode, index: number) => {
         const style: CSSProperties = {
-          position: 'absolute',
+          position: "absolute",
         };
         columnTarget = columnHeights.indexOf(Math.min.apply(Math, columnHeights));
         const top = `${columnHeights[columnTarget]}px`;
@@ -41,7 +40,7 @@ export const MasonryGrid = memo(({
         return React.cloneElement(child as React.ReactElement, { style });
       });
 
-      containerStyle.position = 'relative';
+      containerStyle.position = "relative";
       containerStyle.width = `${columns * itemWidth + (columns - 1) * gap}px`;
       containerStyle.height = `${Math.max.apply(Math, columnHeights) - gap}px`;
 
@@ -52,4 +51,4 @@ export const MasonryGrid = memo(({
   },
 );
 
-MasonryGrid.displayName = 'MasonryGrid';
+MasonryGrid.displayName = "MasonryGrid";
