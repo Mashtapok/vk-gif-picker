@@ -13,7 +13,7 @@
 
 .input__field {
     width: 100%;
-    padding: 9px 0 9px 9px;
+    padding: 9.5px 12px;
     background: var(--gray-0);
     border: 1px solid var(--gray-3);
     border-radius: 6px;

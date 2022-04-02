@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-const API_KEY = 'KCTkyD6EQbio5DepHd6o2ls4pRQGePBs';
+const API_KEY = process.env.REACT_APP_GIPHY_API_KEY as string;
 
 type OptionsType = {
   method: string,

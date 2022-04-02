@@ -9,6 +9,6 @@ export const Loader: FC<Props> = ({ visible }) => {
   if (!visible) return null;
 
   return (
-    <span className="loader" title="Загрузка..." />
+    <span className="loader" aria-label="Загрузка." />
   );
 };

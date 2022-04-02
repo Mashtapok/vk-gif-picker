@@ -51,7 +51,7 @@
     position: relative;
     width: 24px;
     height: 24px;
-    background: url(data:image/svg+xml;charset=utf-8,%3Csvg%20height%3D%2210%22%20viewBox%3D%220%200%2010%2010%22%20width%3D%2210%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22m6.4%205%203.3-3.3c.4-.4.4-1%200-1.4s-1-.4-1.4%200l-3.3%203.3-3.3-3.3c-.4-.4-1-.4-1.4%200s-.4%201%200%201.4l3.3%203.3-3.3%203.3c-.4.4-.4%201%200%201.4.2.2.4.3.7.3s.5-.1.7-.3l3.3-3.3%203.3%203.3c.2.2.4.3.7.3s.5-.1.7-.3c.4-.4.4-1%200-1.4z%22%20fill%3D%22%23828a99%22%2F%3E%3C%2Fsvg%3E) no-repeat center;
+    background: var(--remove-icon) no-repeat center;
     border: 0;
     margin-left: 7px;
     opacity: 0.7;

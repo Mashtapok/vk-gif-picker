@@ -16,7 +16,7 @@ export const Message: React.FC<IMessage> = ({ gif, text, created, id }) => {
   };
 
 
-  // Скролл к новому, чтобы оно было видно сразу после появления
+  // Скролл к новому сообщению после его добавления
   useEffect(() => {
     ref.current.scrollIntoView({ behavior: "smooth" });
   }, []);
@@ -25,16 +25,15 @@ export const Message: React.FC<IMessage> = ({ gif, text, created, id }) => {
   return (
     <div ref={ref} className={isSelected ? "message message--selected" : "message"} onClick={onClickHandler}>
       <SelectedIcon isSelected={isSelected} />
-      <div className="message__content"
-                  area-label="Фотография">
+      <div className="message__content">
         {text && <span>{text}</span>}
         {gif && <img src={gif.images.fixed_height.webp} alt={gif.title}
-               style={{
-                 background: getRandomColor(),
-                 width: Number(gif.images.fixed_height.width),
-                 height: Number(gif.images.fixed_height.height),
-               }} draggable="false" />}
-        </div>
+                     style={{
+                       background: getRandomColor(),
+                       width: Number(gif.images.fixed_height.width),
+                       height: Number(gif.images.fixed_height.height),
+                     }} draggable="false" />}
+      </div>
       <div className="message__timestamp">
         {formatedDate}
       </div>

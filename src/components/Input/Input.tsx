@@ -6,7 +6,7 @@ import { restoreCaretPosition, saveCaretPosition } from "../../helpers/caret";
 import "./Input.css";
 export const Input: FC = () => {
   const inputRef = useRef<HTMLDivElement>(null);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   // Сохраняем позицию курсора на onBlur и восстанавливаем на onFocus
   const [caretPosition, setCaretPosition] = useState(0);
   // TODO:  сделать ограничение на клоичество символов
@@ -33,7 +33,7 @@ export const Input: FC = () => {
   }, []);
 
   return (
-    <div className="input">
+    <div className="input" aria-haspopup="true">
       <GifPicker searchQuery={searchQuery} clearInput={clearInput} />
       <div
         ref={inputRef}
@@ -61,7 +61,7 @@ export const Input: FC = () => {
               setSearchQuery("");
             }
           } else {
-            setSearchQuery("");
+            setSearchQuery(''); // TODO: тут можно undefined
           }
         }}
       />

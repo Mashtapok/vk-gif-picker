@@ -42,6 +42,19 @@ export const GifPicker: React.FC<GifPickerProps> = ({ searchQuery, clearInput })
     }
   }, [debouncedSearchQuery, request]);
 
+  // const loadTrendingGifs = useCallback(async () => {
+  //   try {
+  //     const { data, pagination }: Result = await request("trending", {
+  //       method: "GET",
+  //       urlParams: { limit: GIFS_PAGE_SIZE },
+  //     });
+  //     setGifs(data);
+  //     setTotalCount(pagination.total_count);
+  //   } catch (e) {
+  //     console.error(e);
+  //   }
+  // }, [debouncedSearchQuery, request]);
+
   const clearInputWithClosingPicker = () => {
     clearInput();
     setStyles({ display: "none" });
@@ -65,6 +78,9 @@ export const GifPicker: React.FC<GifPickerProps> = ({ searchQuery, clearInput })
     if (debouncedSearchQuery) {
       loadGifs();
     }
+    // else if(debouncedSearchQuery === '') { // TODO: подумать как сделать тренды на пробеле
+    //   loadTrendingGifs();
+    // }
   }, [loadGifs, debouncedSearchQuery]);
 
   useEffect(() => {
@@ -115,7 +131,7 @@ export const GifPicker: React.FC<GifPickerProps> = ({ searchQuery, clearInput })
                    timeout={300}
                    onExit={restoreStyles}
                    unmountOnExit>
-      <div className="gif-picker" style={styles} area-label="Выбор gif изображения">
+      <div className="gif-picker" style={styles} aria-label="Выбор gif изображения.">
         <div className="gif-picker__viewport"
              ref={scrollViewportRef}
              onScroll={scrollHandler}
