@@ -8,6 +8,9 @@ import { CSSTransition } from "react-transition-group";
 import "./GifPicker.css";
 import { IGif } from "@giphy/js-types";
 import { Loader } from "../common/Loader/Loader";
+import { useMessagesContext } from "../../hooks/useMessagesContext";
+
+const GIFS_PAGE_SIZE = 25;
 
 type GifPickerProps = {
   searchQuery: string,
@@ -24,12 +27,13 @@ export const GifPicker: React.FC<GifPickerProps> = ({ searchQuery, clearInput })
 
   const { request } = useHttpRequest();
   const debouncedSearchQuery = useDebounce(searchQuery, 500);
+  const { addMessage } = useMessagesContext();
 
   const loadGifs = useCallback(async () => {
     try {
       const { data, pagination }: Result = await request("search", {
         method: "GET",
-        urlParams: { q: debouncedSearchQuery, limit: 25 },
+        urlParams: { q: debouncedSearchQuery, limit: GIFS_PAGE_SIZE },
       });
       setGifs(data);
       setTotalCount(pagination.total_count);
@@ -38,7 +42,7 @@ export const GifPicker: React.FC<GifPickerProps> = ({ searchQuery, clearInput })
     }
   }, [debouncedSearchQuery, request]);
 
-  const newClearInput = () => {
+  const clearInputWithClosingPicker = () => {
     clearInput();
     setStyles({ display: "none" });
   };
@@ -68,7 +72,7 @@ export const GifPicker: React.FC<GifPickerProps> = ({ searchQuery, clearInput })
       try {
         request("search", {
           method: "GET",
-          urlParams: { q: debouncedSearchQuery, limit: 25, offset: pages * 25 },
+          urlParams: { q: debouncedSearchQuery, limit: GIFS_PAGE_SIZE, offset: pages * GIFS_PAGE_SIZE },
         })
           .then(({ data }: Result) => {
             setGifs(gifs.concat(data));
@@ -82,6 +86,29 @@ export const GifPicker: React.FC<GifPickerProps> = ({ searchQuery, clearInput })
     }
   }, [isFetching]);
 
+  const clickHandler = (event: React.MouseEvent<HTMLDivElement>) => {
+    // Если клик не по гифке => ничего не предпринимаем
+    if (!(event.target instanceof HTMLImageElement)) {
+      return;
+    }
+    const newGifId = event.target.dataset.gif;
+    const newGif = gifs.find(({ id }) => id === newGifId);
+
+    addMessage({ gif: newGif, created: new Date(), id: Date.now() });
+    clearInputWithClosingPicker();
+  };
+
+  const keyDownHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.code === "Enter") {
+      // @ts-ignore
+      const newGifId = event.target.dataset.gif;
+      const newGif = gifs.find(({ id }) => id === newGifId);
+
+      addMessage({ gif: newGif, created: new Date(), id: Date.now() });
+      clearInputWithClosingPicker();
+    }
+  };
+
   return (
     <CSSTransition classNames="gif-picker"
                    in={!!debouncedSearchQuery}
@@ -89,13 +116,16 @@ export const GifPicker: React.FC<GifPickerProps> = ({ searchQuery, clearInput })
                    onExit={restoreStyles}
                    unmountOnExit>
       <div className="gif-picker" style={styles} area-label="Выбор gif изображения">
-        <div className="gif-picker__viewport" onScroll={scrollHandler} ref={scrollViewportRef}>
+        <div className="gif-picker__viewport"
+             ref={scrollViewportRef}
+             onScroll={scrollHandler}
+             onClick={clickHandler}
+             onKeyDown={keyDownHandler}>
           {gifs.length ? <Grid
             width={390}
             columns={3}
             gap={10}
             gifs={gifs}
-            clearInput={newClearInput}
           /> : <div className="gif-picker--empty">По вашему запросу ничего не найдено</div>}
           <Loader visible={isFetching} />
         </div>

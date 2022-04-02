@@ -14,7 +14,6 @@ type GridProps = {
   columns: number,
   width: number,
   gap: number,
-  clearInput: () => void
 }
 
 const initialState = Object.freeze({
@@ -48,7 +47,6 @@ export class Grid extends PureComponent<GridProps, State> {
       columns,
       width,
       gap,
-      clearInput
     } = this.props;
 
     const { gifWidth } = this.state;
@@ -69,7 +67,6 @@ export class Grid extends PureComponent<GridProps, State> {
               gif={gif}
               key={gif.id}
               width={gifWidth}
-              clearInput={clearInput}
             />
           ))}
         </MasonryGrid>

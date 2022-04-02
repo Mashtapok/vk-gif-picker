@@ -1,23 +1,30 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
-import { GifPicker } from '../GifPicker/GifPicker';
-import { highlight } from '../../helpers/highlight';
-import { restoreCaretPosition, saveCaretPosition } from '../../helpers/caret';
+import React, { FC, useEffect, useRef, useState } from "react";
+import { GifPicker } from "../GifPicker/GifPicker";
+import { highlight } from "../../helpers/highlight";
+import { restoreCaretPosition, saveCaretPosition } from "../../helpers/caret";
 
-import './Input.css';
-
+import "./Input.css";
 export const Input: FC = () => {
   const inputRef = useRef<HTMLDivElement>(null);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   // Сохраняем позицию курсора на onBlur и восстанавливаем на onFocus
   const [caretPosition, setCaretPosition] = useState(0);
   // TODO:  сделать ограничение на клоичество символов
 
   const clearInput = () => {
     if (inputRef.current) {
-      inputRef.current.innerHTML = '';
-      setSearchQuery('');
+      inputRef.current.innerHTML = "";
+      setSearchQuery("");
     }
   };
+
+  // const keyDownHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  //   if (e.code === "Enter" && inputRef.current && inputRef.current.innerHTML) {
+  //     console.log(inputRef);
+  //     addMessage({ text: inputRef.current.innerHTML, created: new Date(), id: Date.now() });
+  //     clearInput();
+  //   }
+  // };
 
   useEffect(() => {
     if (inputRef.current) {
@@ -45,16 +52,16 @@ export const Input: FC = () => {
         onInput={e => {
           const nodes = highlight(e.currentTarget);
 
-          if (nodes.find(({ nodeName }) => nodeName === 'SPAN')) {
-            const searchText = nodes.find(({ nodeName }) => nodeName === '#text')?.textContent;
-            console.log(nodes);
+          if (nodes.find(({ nodeName }) => nodeName === "SPAN")) {
+            const searchText = nodes.find(({ nodeName }) => nodeName === "#text")?.textContent;
+
             if (searchText && searchText.trim()) {
               setSearchQuery(searchText.trim());
             } else {
-              setSearchQuery('');
+              setSearchQuery("");
             }
           } else {
-            setSearchQuery('');
+            setSearchQuery("");
           }
         }}
       />

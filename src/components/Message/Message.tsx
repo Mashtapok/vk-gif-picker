@@ -25,16 +25,16 @@ export const Message: React.FC<IMessage> = ({ gif, text, created, id }) => {
   return (
     <div ref={ref} className={isSelected ? "message message--selected" : "message"} onClick={onClickHandler}>
       <SelectedIcon isSelected={isSelected} />
-      {gif ? <div className="message__content"
+      <div className="message__content"
                   area-label="Фотография">
-          <img src={gif.images.fixed_height.webp} alt={gif.title}
+        {text && <span>{text}</span>}
+        {gif && <img src={gif.images.fixed_height.webp} alt={gif.title}
                style={{
                  background: getRandomColor(),
                  width: Number(gif.images.fixed_height.width),
                  height: Number(gif.images.fixed_height.height),
-               }} draggable="false" />
+               }} draggable="false" />}
         </div>
-        : null}
       <div className="message__timestamp">
         {formatedDate}
       </div>
