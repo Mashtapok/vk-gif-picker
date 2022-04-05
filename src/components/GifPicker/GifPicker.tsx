@@ -9,7 +9,7 @@ import "./GifPicker.css";
 import { IGif } from "@giphy/js-types";
 import { useMessagesContext } from "../../hooks/useMessagesContext";
 import { debounce } from "../../helpers/shared";
-import { Loader } from "../common/Loader/Loader";
+import { Loader } from "../Loader/Loader";
 
 const GIFS_PAGE_SIZE = 25;
 
@@ -21,46 +21,35 @@ type GifPickerProps = {
 export const GifPicker: React.FC<GifPickerProps> = ({ searchQuery, clearInput }) => {
   const [gifs, setGifs] = useState<IGif[]>([]);
   const [styles, setStyles] = useState<Record<string, string>>({});
-  const [pages, setPages] = useState<number>(1);
-  const [totalCount, setTotalCount] = useState<number>(0);
   const [isFetching, setIsFetching] = useState<boolean>(false);
+  const [totalCount, setTotalCount] = useState<number>(0);
+  const [pages, setPages] = useState<number>(1);
   const scrollViewportRef = useRef<HTMLDivElement>(null);
 
-  const { request, error } = useHttpRequest();
   const debouncedSearchQuery = useDebounce(searchQuery, 500);
+  const { request, error } = useHttpRequest();
   const { addMessage } = useMessagesContext();
 
   const loadGifs = useCallback(async () => {
     setIsFetching(true);
-    try {
+
+    if (debouncedSearchQuery) {
       const { data, pagination }: Result = await request("search", {
         method: "GET",
         urlParams: { q: debouncedSearchQuery as string, limit: GIFS_PAGE_SIZE },
       });
       setGifs(data);
       setTotalCount(pagination.total_count);
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setIsFetching(false);
-    }
-  }, [debouncedSearchQuery, request]); // FIXME: вынестии в универс. метод
-
-  const loadTrendingGifs = useCallback(async () => {
-    setIsFetching(true);
-    try {
+    } else if (debouncedSearchQuery === "") {
       const { data, pagination }: Result = await request("trending", {
         method: "GET",
         urlParams: { limit: GIFS_PAGE_SIZE },
       });
       setGifs(data);
       setTotalCount(pagination.total_count);
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setIsFetching(false);
     }
-  }, [debouncedSearchQuery, request]);// FIXME: вынестии в универс. метод
+    setIsFetching(false);
+  }, [debouncedSearchQuery, request]);
 
   const clearInputWithClosingPicker = () => {
     clearInput();
@@ -72,7 +61,7 @@ export const GifPicker: React.FC<GifPickerProps> = ({ searchQuery, clearInput })
     setStyles({});
   };
 
-  const scrollHandler = debounce((e: any) => {
+  const scrollHandler = debounce(async (e: any) => {
     if (isFetching) return;
 
     const scrollHeight = e.target.scrollHeight;
@@ -81,29 +70,24 @@ export const GifPicker: React.FC<GifPickerProps> = ({ searchQuery, clearInput })
 
     if (scrollHeight - (scrollFromTop + viewportHeight) < 100 && gifs.length < totalCount) {
       setIsFetching(true);
-      // FIXME: вынестии в универс. метод
+
       if (debouncedSearchQuery === "") {
-        request("trending", {
+        const { data }: Result = await request("trending", {
           method: "GET",
           urlParams: { limit: GIFS_PAGE_SIZE, offset: pages * GIFS_PAGE_SIZE },
-        })
-          .then(({ data }: Result) => {
-            setGifs(gifs.concat(data));
-            setPages(prevPage => prevPage + 1);
-          })
-          .finally(() => setIsFetching(false));
+        });
+        setGifs(gifs.concat(data));
+        setPages(prevPage => prevPage + 1);
       } else {
-        request("search", {
+        const { data }: Result = await request("search", {
           method: "GET",
           urlParams: { q: debouncedSearchQuery!, limit: GIFS_PAGE_SIZE, offset: pages * GIFS_PAGE_SIZE },
-        })
-          .then(({ data }: Result) => {
-            setGifs(gifs.concat(data));
-            setPages(pages + 1);
-          })
-          .finally(() => setIsFetching(false));
+        });
+        setGifs(gifs.concat(data));
+        setPages(pages + 1);
       }
 
+      setIsFetching(false);
     }
   }, 150);
 
@@ -132,12 +116,8 @@ export const GifPicker: React.FC<GifPickerProps> = ({ searchQuery, clearInput })
   // TODO: Сделать скрытие попапа при клике вне
 
   useEffect(() => {
-    if (debouncedSearchQuery) {
-      loadGifs();
-    } else if (debouncedSearchQuery === "") {
-      loadTrendingGifs();
-    }
-  }, [loadGifs, loadTrendingGifs, debouncedSearchQuery]);
+    loadGifs();
+  }, [loadGifs]);
 
   // Сброс пагинации и скролл наверх при смене поискового запроса
   useEffect(() => {
@@ -168,7 +148,7 @@ export const GifPicker: React.FC<GifPickerProps> = ({ searchQuery, clearInput })
             gifs={gifs}
           /> : isFetching ? null : <div
             className="gif-picker--empty">По вашему запросу ничего не найдено</div>}
-          <Loader visible={isFetching} />
+          <Loader visible={isFetching && !error} />
         </div>
       </div>
     </CSSTransition>

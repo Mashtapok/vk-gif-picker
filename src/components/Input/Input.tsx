@@ -26,6 +26,7 @@ export const Input: FC = () => {
     if (inputRef.current) {
       inputRef.current.focus();
     }
+
   }, []);
 
   return (
@@ -33,7 +34,7 @@ export const Input: FC = () => {
       <GifPicker searchQuery={searchQuery} clearInput={clearInput} />
       <div
         ref={inputRef}
-        contentEditable
+        contentEditable={"plaintext-only" as any} // Предотвращает вставку браузерами различных ненужных тэгов
         className="input__field"
         placeholder="Напишите сообщение..."
         role="textbox"
@@ -45,36 +46,10 @@ export const Input: FC = () => {
         onBlur={({ currentTarget }) => {
           const savedPosition = saveCaretPosition(currentTarget);
           setCaretPosition(savedPosition);
-
-          // if(searchQuery) {
-          //   const firstGifElement = document.querySelector('.gif-container') as HTMLDivElement;
-          //   console.log(firstGifElement, 'firstGifElement');
-          //   firstGifElement.focus();
-          // }
         }}
-        // onInput={e => {
-        //   const nodes = highlight(e.currentTarget);
-        //
-        //   console.log(nodes, 'NODES');
-        //
-        //   if (nodes.find(({ nodeName }) => nodeName === "SPAN")) {
-        //     const searchText = nodes.find(({ nodeName }) => nodeName === "#text")?.textContent;
-        //
-        //     if (searchText && searchText.trim()) {
-        //       setSearchQuery(searchText.trim());
-        //
-        //       //if(inputRef.current) {
-        //       //  inputRef.current.tabIndex = -1;
-        //       // }
-        //     } else {
-        //       setSearchQuery("");
-        //     }
-        //   } else {
-        //     setSearchQuery(''); // TODO: тут можно undefined
-        //   }
-        // }}
         onInput={e => {
           const nodes = highlight(e.currentTarget);
+          if(!nodes) return;
 
           if (nodes[0]?.nodeName === "SPAN") {
             setTabIndex(-1);
@@ -83,22 +58,6 @@ export const Input: FC = () => {
             setSearchQuery(undefined);
             setTabIndex(0);
           }
-
-          // if (nodes.find(({ nodeName }) => nodeName === "SPAN")) {
-          //   const searchText = nodes.find(({ nodeName }) => nodeName === "#text")?.textContent;
-          //
-          //   if (searchText && searchText.trim()) {
-          //     setSearchQuery(searchText.trim());
-          //
-          //     //if(inputRef.current) {
-          //     //  inputRef.current.tabIndex = -1;
-          //     // }
-          //   } else {
-          //     setSearchQuery("");
-          //   }
-          // } else {
-          //   setSearchQuery('');
-          // }
         }}
       />
     </div>

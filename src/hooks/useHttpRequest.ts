@@ -6,7 +6,7 @@ type OptionsType = {
   method: string,
   urlParams: Record<string, string | number>,
   body?: any,
-  headers?: any,
+  headers?: Record<string, any>,
 }
 
 export const useHttpRequest = () => {
@@ -42,7 +42,7 @@ export const useHttpRequest = () => {
         const data = await response.json();
 
         if (!response.ok) {
-          throw new Error(data.message || "Что-то пошло не так");
+          setError(data.message || "Что-то пошло не так");
         }
 
         return data;
@@ -52,9 +52,9 @@ export const useHttpRequest = () => {
       } finally {
         setLoading(false);
       }
-    }
-    , []);
+    }, []);
 
   const clearError = useCallback(() => setError(null), []);
+
   return { loading, request, error, clearError };
 };

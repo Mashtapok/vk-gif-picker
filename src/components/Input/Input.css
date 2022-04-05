@@ -12,6 +12,7 @@
 }
 
 .input__field {
+    display: inline-block;
     width: 100%;
     padding: 9.5px 12px;
     background: var(--gray-0);

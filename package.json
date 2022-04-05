@@ -2,8 +2,8 @@
   "name": "vk-test-2022",
   "description": "Тестовое задание для VK",
   "version": "0.1.0",
-  "private": true,
   "homepage": "https://mashtapok.github.io/vk-test-2022/",
+  "private": true,
   "author": {
     "email": "mashtakov.dev@gmail.com",
     "name": "Stepan Mashtakov",

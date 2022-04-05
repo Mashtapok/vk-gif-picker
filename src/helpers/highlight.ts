@@ -1,10 +1,10 @@
 import { gifMarkerParser, ParsedNodeType } from "./parser";
-import { restoreCaretPosition, saveCaretPosition } from './caret';
+import { restoreCaretPosition, saveCaretPosition } from "./caret";
 
 let parsedValues = [];
 
 export const highlight = (input: HTMLDivElement) => {
-  const nodes = Array.from(input.childNodes).filter(node => node.nodeName !== 'BR');
+  const nodes = Array.from(input.childNodes).filter(node => node.nodeName !== "BR");
 
   const transformedNodes = [];
 
@@ -28,18 +28,18 @@ export const highlight = (input: HTMLDivElement) => {
 };
 
 export const getTextContent = (node: any): string => {
-  if (node.nodeName === '#text') return node.data.replace(/\n/g, '');
-  if (node.nodeName === 'BR') return '\n';
-  if (node.nodeName === 'IMG') return node.alt;
+  if (node.nodeName === "#text") return node.data.replace(/\n/g, "");
+  if (node.nodeName === "BR") return "\n";
+  if (node.nodeName === "IMG") return node.alt;
 
-  return [...node.childNodes].map(getTextContent).join('');
+  return [...node.childNodes].map(getTextContent).join("");
 };
 
 const createSpan = (content: string): HTMLSpanElement => {
-  const span = document.createElement('span');
+  const span = document.createElement("span");
 
   span.innerText = content;
-  span.classList.add('input__marker');
+  span.classList.add("input__marker");
 
   return span;
 };
