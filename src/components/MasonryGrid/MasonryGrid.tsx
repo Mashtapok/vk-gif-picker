@@ -17,8 +17,8 @@ export const MasonryGrid = memo(({
                                  }: MasonryGridProps) => {
     const containerStyle: CSSProperties = {};
 
-    const fillArray = (length: number) => {
-      return Array.apply(null, Array(length)).map(() => 0);
+    const fillArray = (length: number): number[] => {
+      return Array.from({ length }).fill(0) as number[];
     };
 
     const getChildren = (): ReactNode => {
@@ -29,7 +29,7 @@ export const MasonryGrid = memo(({
         const style: CSSProperties = {
           position: "absolute",
         };
-        columnTarget = columnHeights.indexOf(Math.min.apply(Math, columnHeights));
+        columnTarget = columnHeights.indexOf(Math.min(...columnHeights));
         const top = `${columnHeights[columnTarget]}px`;
         const left = `${columnTarget * itemWidth + columnTarget * gap}px`;
         style.transform = `translate3d(${left}, ${top}, 0)`;

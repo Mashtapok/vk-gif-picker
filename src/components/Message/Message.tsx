@@ -27,7 +27,7 @@ export const Message: React.FC<IMessage> = ({ gif, text, created, id }) => {
       <SelectedIcon isSelected={isSelected} />
       <div className="message__content">
         {text && <span>{text}</span>}
-        {gif && <img src={gif.images.fixed_height.webp} alt={gif.title}
+        {gif && <img src={gif.images.fixed_height.webp || gif.images.fixed_height.url} alt={gif.title}
                      style={{
                        background: getRandomColor(),
                        width: Number(gif.images.fixed_height.width),

@@ -23,10 +23,16 @@ export const HistoryHeader = () => {
           <span
             className="history__selected-messages-count">{`${selectedMessages.length} ${getPlural(selectedMessages.length,
             ["сообщение", "сообщения", "сообщений"])}`}</span>
-        <button className="history__selected-messages-remove-btn" type="button" aria-label="Снять выделение." />
+        <button className="history__selected-messages-remove-btn"
+                type="button"
+                aria-label="Снять выделение." />
       </div>
       <div className="history__actions">
-        <button className="history__action-delete" title="Удалить" aria-label="Удалить." type="button" onClick={onDelete}>
+        <button className="history__action-delete"
+                title="Удалить"
+                aria-label="Удалить."
+                type="button"
+                onClick={onDelete}>
           <svg width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fillRule="evenodd" clipRule="evenodd"
                   d="M7.7 6.5a.75.75 0 00-.7.8l.5 7a.75.75 0 001.5-.1l-.5-7a.75.75 0 00-.8-.7zm4.6 0a.75.75 0 01.7.8l-.5 7a.75.75 0 01-1.5-.1l.5-7a.75.75 0 01.8-.7z"

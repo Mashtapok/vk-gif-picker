@@ -9,23 +9,22 @@ type State = {
   gifs: IGif[]
 }
 
-type GridProps = {
+type Props = {
   gifs: IGif[],
   columns: number,
   width: number,
   gap: number,
 }
 
-const initialState = Object.freeze({
+const initialState = {
   gifWidth: 0,
   gifs: [] as IGif[],
-});
+};
 
-export class Grid extends PureComponent<GridProps, State> {
+export class Grid extends PureComponent<Props, State> {
   readonly state = { ...initialState };
-  unmounted: boolean = false;
-  // paginator = gifPaginator(this.props.fetchGifs, this.state.gifs)
-  static getDerivedStateFromProps: GetDerivedStateFromProps<GridProps, State> = (
+
+  static getDerivedStateFromProps: GetDerivedStateFromProps<Props, State> = (
     { columns, gap, width },
     prevState: State,
   ) => {
@@ -37,10 +36,6 @@ export class Grid extends PureComponent<GridProps, State> {
     return null;
   };
 
-  componentWillUnmount() {
-    this.unmounted = true;
-  }
-
   render() {
     const {
       gifs,
@@ -51,7 +46,7 @@ export class Grid extends PureComponent<GridProps, State> {
 
     const { gifWidth } = this.state;
 
-    // Получаем высоты каждой гифки
+    // Получаем высоты каждой гифки в виде [heightImage1, heightImage2, heightImage3, ...]
     const itemHeights = gifs.map((gif) => getGifHeight(gif, gifWidth));
 
     return (
@@ -62,10 +57,10 @@ export class Grid extends PureComponent<GridProps, State> {
           columns={columns}
           gap={gap}
         >
-          {gifs.map((gif) => (
+          {gifs.map((gif, index) => (
             <Gif
               gif={gif}
-              key={gif.id}
+              key={gif.id + String(index)} // Бывают совпадения id в разделе трендов
               width={gifWidth}
             />
           ))}

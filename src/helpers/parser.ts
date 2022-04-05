@@ -24,7 +24,6 @@ type ParserTypes = {
  *  const result = parser('text element');
  *  result = [{ type: 'text', value: 'text ' }, { type: 'el', value: 'element' }];
  */
-
 const createParser = ({ regexp, parseText, parseElement }: ParserTypes): (text: string) => ParsedNodeType[] => {
   return (text) => {
     const blocks = [];
@@ -51,7 +50,8 @@ const createParser = ({ regexp, parseText, parseElement }: ParserTypes): (text: 
 };
 
 export const gifMarkerParser = createParser({
-  regexp: /\/gif\b/giy,
+  // regexp: /\/gif\b/giy,
+  regexp: /\/gif\s/giy,
   parseText: value => [{ type: "text", value }],
   parseElement: value => [{ type: "marker", value }],
 });

@@ -86,3 +86,10 @@
 .history__action-delete:active {
     transform: translateY(3px);
 }
+
+@media screen and (max-width: 470px) {
+    .history {
+        height: 100%;
+        margin-top: 0;
+    }
+}

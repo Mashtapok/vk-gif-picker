@@ -1,4 +1,18 @@
 .gif-container:focus {
+    /* Резервный стиль для браузеров, которые не поддерживают: focus-visible */
+    /*outline: none;*/
+    /*background: lightgrey;*/
+    box-shadow: 0 0 0 3px #5c9ce6;
+    outline: none;
+}
+
+.gif-container:focus:not(:focus-visible) {
+    /* Убираем подсветку фокуса при клике мышью для браузеров, которые поддерживают :focus-visible */
+    box-shadow: none;
+    outline: none;
+}
+
+.gif-container:focus-visible {
     box-shadow: 0 0 0 3px #5c9ce6;
     outline: none;
 }

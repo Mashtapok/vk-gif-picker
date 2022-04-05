@@ -1,4 +1,4 @@
-import { IGif } from '@giphy/js-types';
+import { IGif, IImage, IRendition } from "@giphy/js-types";
 
 export interface Result {
   data: IGif[];
@@ -16,4 +16,8 @@ export interface Result {
 
 export interface ErrorResult {
   message?: string;
+}
+
+export interface Rendition extends IRendition {
+  sizeName: string;
 }

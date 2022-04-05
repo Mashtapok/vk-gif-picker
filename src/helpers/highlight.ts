@@ -6,6 +6,8 @@ let parsedValues = [];
 export const highlight = (input: HTMLDivElement) => {
   const nodes = Array.from(input.childNodes).filter(node => node.nodeName !== 'BR');
 
+  const transformedNodes = [];
+
   for (const node of nodes) {
     parsedValues = gifMarkerParser(getTextContent(node));
     const fragment = document.createDocumentFragment();
@@ -14,6 +16,7 @@ export const highlight = (input: HTMLDivElement) => {
       // @ts-ignore
       const element = createHtmlElement[block.type](block);
       fragment.append(element);
+      transformedNodes.push(element);
     }
 
     const position = saveCaretPosition(input);
@@ -21,7 +24,7 @@ export const highlight = (input: HTMLDivElement) => {
     restoreCaretPosition(input, position);
   }
 
-  return nodes;
+  return transformedNodes;
 };
 
 export const getTextContent = (node: any): string => {
@@ -43,5 +46,5 @@ const createSpan = (content: string): HTMLSpanElement => {
 
 const createHtmlElement = {
   marker: (block: ParsedNodeType) => createSpan(block.value),
-  text: (block: ParsedNodeType) => block.value,
+  text: (block: ParsedNodeType) => document.createTextNode(block.value),
 };

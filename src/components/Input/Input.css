@@ -40,3 +40,10 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
+@media screen and (max-width: 470px) {
+    .input {
+        width: 100%;
+        margin-bottom: 0;
+    }
+}
