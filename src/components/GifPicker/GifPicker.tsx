@@ -153,8 +153,6 @@ export const GifPicker: React.FC<GifPickerProps> = ({ searchQuery, clearInput })
     setPages(1);
   }, [debouncedSearchQuery]);
 
-  // TODO: Вынести svg в спрайт
-
   return (
     <CSSTransition classNames="gif-picker"
                    in={debouncedSearchQuery !== undefined}

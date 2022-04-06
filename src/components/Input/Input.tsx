@@ -9,10 +9,8 @@ import "./Input.css";
 export const Input: FC = () => {
   const inputRef = useRef<HTMLDivElement>(null);
   const [searchQuery, setSearchQuery] = useState<string | undefined>(undefined);
-  // Сохраняем позицию курсора на onBlur и восстанавливаем на onFocus
   const [caretPosition, setCaretPosition] = useState(0);
   const [tabIndex, setTabIndex] = useState(0);
-  // TODO:  сделать ограничение на клоичество символов
 
   const clearInput = () => {
     if (inputRef.current) {
@@ -49,7 +47,7 @@ export const Input: FC = () => {
         }}
         onInput={e => {
           const nodes = highlight(e.currentTarget);
-          if(!nodes) return;
+          if (!nodes) return;
 
           if (nodes[0]?.nodeName === "SPAN") {
             setTabIndex(-1);
