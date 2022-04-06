@@ -1,15 +1,15 @@
 .gif-picker {
     height: 248px;
-    background: #FFF;
-    border: 1px solid #D3D9DE;
+    background: var(--gray-0);
+    border: 1px solid var(--gray-3);
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 1px;
     position: absolute;
-    left: 16px;
-    right: 17px;
-    bottom: 70px;
-
+    left: 17px;
+    right: 16px;
+    bottom: 76px;
     opacity: 0;
+    transition: all 300ms;
 }
 
 .gif-picker__viewport {
@@ -20,15 +20,12 @@
     margin-top: 7px;
 }
 
-.gif {
-    display: block;
-    border-radius: 2px;
-    cursor: pointer;
-    transition: filter 200ms;
-}
-
-.gif:hover {
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)) drop-shadow(0px 13px 8px rgba(0, 0, 0, 0.12)) drop-shadow(0px 6px 6px rgba(0, 0, 0, 0.2));
+.gif-picker--empty {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--text-secondary);
 }
 
 ::-webkit-scrollbar {
@@ -37,7 +34,7 @@
 
 ::-webkit-scrollbar-thumb {
     height: 25%;
-    background-color: #dae2ea;
+    background-color: var(--gray-4);
     border-radius: 4px;
     cursor: pointer;
 }
@@ -50,22 +47,20 @@
 /* styles for react-transition-group*/
 .gif-picker-enter {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(20px);
 }
 
 .gif-picker-enter-done {
     opacity: 1;
-    transition: all 200ms;
     transform: translateY(0);
 }
 
 .gif-picker-exit {
-    opacity: 1;
+    opacity: 0;
     transform: translateY(0);
 }
 
 .gif-picker-exit-done {
     opacity: 0;
-    transition: all 200ms;
-    transform: translateY(10px);
+    transform: translateY(20px);
 }

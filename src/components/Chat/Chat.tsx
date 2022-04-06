@@ -1,13 +1,13 @@
-import React from 'react';
-import './Chat.css';
-import { Input } from '../Input/Input';
-import { History } from '../History/History';
+import React from "react";
+import "./Chat.css";
+import { Input } from "../Input/Input";
+import { ChatHistory } from "./components/ChatHistory/ChatHistory";
 
 export const Chat = () => {
   return (
-    <div className='chat'>
-      <History />
+    <main className="chat">
+      <ChatHistory />
       <Input />
-    </div>
+    </main>
   );
 };

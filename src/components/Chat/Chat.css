@@ -4,3 +4,9 @@
     width: 450px;
     height: 100%;
 }
+
+@media screen and (max-width: 470px){
+    .chat {
+        width: 100%;
+    }
+}

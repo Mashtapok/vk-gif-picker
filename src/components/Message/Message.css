@@ -1,0 +1,72 @@
+.message {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    padding: 10px 16px 10px 30px;
+    cursor: pointer;
+}
+
+.message--selected {
+    background-color: var(--tint-color);
+}
+
+.message__content {
+    flex: 1 1 90%;
+}
+
+.message__content img {
+    max-width: 95%;
+    border-radius: 6px;
+}
+
+.message__timestamp {
+    flex: 0 1 10%;
+    color: var(--text-secondary);
+}
+
+.message__check {
+    position: absolute;
+    top: 10px;
+    left: 8px;
+    color: var(--blue-1);
+    opacity: 0;
+}
+
+.message:hover > .message__check {
+    opacity: 0.6;
+}
+
+.message--selected:hover > .message__check {
+    opacity: 1;
+}
+
+.message__check--selected {
+    opacity: 1;
+}
+
+
+.message--animate {
+    opacity: 1;
+    transition: all 1s;
+}
+
+/* styles for react-transition-group*/
+.message-enter {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.message-enter-done {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.message-exit {
+    opacity: 0;
+    transform: translateY(0);
+}
+
+.message-exit-done {
+    opacity: 0;
+    transform: translateY(20px);
+}

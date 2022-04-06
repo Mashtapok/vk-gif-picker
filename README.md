@@ -1,46 +1,61 @@
-# Getting Started with Create React App
+# Gif picker
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Этот проект - реализация тестового задания на стажировку VK в комманду веб-мессенджера.
 
-## Available Scripts
+![image](https://i.imgur.com/yY4lW5w.png)
 
-In the project directory, you can run:
+---
 
-### `yarn start`
+## Демо
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+[Ссылка на приложение](https://mashtapok.github.io/vk-test-2022)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+---
 
-### `yarn test`
+## Стек:
+* React
+* TypeScript
+* react-transition-group
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Реализовано:
 
-### `yarn build`
+* Активация пикера при вводе команды `/gif` и определение поисковой фразы после пробела
+* Если после команды `/gif` и пробела пользователь не вводит поисковую фразу, то показываются гифки из раздела "Тренды"
+* Подсветка команды `/gif` градиентом
+* Вывод гифок в виде masonry сетки
+* "Бесконечный" скролл с загрузкой гифок
+* Отправка выбранной гифки в список сообщений
+* Возможность выделения и удаления сообщений
+* Управление с клавиатуры и доступность
+* * Плавные анимации
+* Поддержка двух цветовых схем (светлая и тёмная) с автоподстройкой под тему браузера
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
+### Подсветка команды
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Реализацию подсветки команды `/gif` я видел двумя способами:
+1. Использование нативного `<textarea>` со скрытым текстом внутри и "наложенным" поверх блоком, в котором распарсенное содержимое textarea подсвечивается в случае ввода команды.
+2. Использование атрибута `contentEditable` для создания собственного поля ввода.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Второй вариант показался мне более сложным и интересным, поэтому я решил попробовать реализовать его.
 
-### `yarn eject`
+### Доступность
+* Поддерживается управление с клавиаутуры через клавишу `TAB`. (управление стрелками с masonry grid реализовать довольно
+  сложно и я, к сожалению, не успел придумать решение).
+* Сделана отправка сообщения по нажатию на `Enter`, если гифка находится в фокусе.
+* Проставлены атрибуты `alt` , `aria-label` и др.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Оптимизации
+* Debounce запросов на ввод поисковой фразы
+* Динамическая пагинация по 25 гифок при скролле с дебаунсингом
+* Запрашиваем из API Giphy только нужный набор разрешений изображений, сокращая размера response
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Макет в Figma:
+[ссылка](https://www.figma.com/file/tiqe4OR4MQXNZKeB9GmxL3/GIF-picker)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Запуск с помощью Docker
+1. Необходимо сперва удалить поле "homepage" в package.json (оно используется для gh-pages)
+2. В терминале ввести команду: `docker build -t vk-test .`
+3. Затем: `docker run -dp <ваш_порт>:8080 vk-test`
+4. Открыть приложение в браузере по адресу: `http://localhost:<ваш_порт>`

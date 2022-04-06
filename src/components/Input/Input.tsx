@@ -1,42 +1,60 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { GifPicker } from '../GifPicker/GifPicker';
-import { highlight } from '../../helpers/highlight';
+import React, { FC, useEffect, useRef, useState } from "react";
+import { GifPicker } from "../GifPicker/GifPicker";
+import { highlight } from "../../helpers/highlight";
+import { restoreCaretPosition, saveCaretPosition } from "../../helpers/caret";
 
-import './Input.css';
+import "./Input.css";
 
-export const Input = () => {
+
+export const Input: FC = () => {
   const inputRef = useRef<HTMLDivElement>(null);
-  const [searchQuery, setSsearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState<string | undefined>(undefined);
+  const [caretPosition, setCaretPosition] = useState(0);
+  const [tabIndex, setTabIndex] = useState(0);
+
+  const clearInput = () => {
+    if (inputRef.current) {
+      inputRef.current.innerHTML = "";
+      setSearchQuery(undefined);
+      setTabIndex(0);
+    }
+  };
 
   useEffect(() => {
     if (inputRef.current) {
-      inputRef.current.focus(); // FIXME: КУРСОР при TAB ставится в начало, а надо в нужное место
+      inputRef.current.focus();
     }
+
   }, []);
 
   return (
-    <div className='input'>
-      <GifPicker searchQuery={searchQuery} />
+    <div className="input" aria-haspopup="true">
+      <GifPicker searchQuery={searchQuery} clearInput={clearInput} />
       <div
         ref={inputRef}
-        contentEditable
-        className='input__field'
-        placeholder='Напишите сообщение...'
-        role='textbox'
-        aria-multiline='true'
-        tabIndex={0}
-        // dangerouslySetInnerHTML={{ __html: '' }}
+        contentEditable={"plaintext-only" as any} // Предотвращает вставку некоторыми браузерами различных ненужных тэгов внутрь contentEditable
+        className="input__field"
+        placeholder="Напишите сообщение..."
+        role="textbox"
+        tabIndex={tabIndex}
+        aria-label="Сообщение."
+        onFocus={({ currentTarget }) => {
+          restoreCaretPosition(currentTarget, caretPosition);
+        }}
+        onBlur={({ currentTarget }) => {
+          const savedPosition = saveCaretPosition(currentTarget);
+          setCaretPosition(savedPosition);
+        }}
         onInput={e => {
           const nodes = highlight(e.currentTarget);
-          if (nodes.find(({ nodeName }) => nodeName === 'SPAN')) {
-            const searchText = nodes.find(({ nodeName }) => nodeName === '#text')?.textContent;
-            if (searchText && searchText.trim()) {
-              setSsearchQuery(searchText.trim());
-            } else {
-              setSsearchQuery('');
-            }
+          if (!nodes) return;
+
+          if (nodes[0]?.nodeName === "SPAN") {
+            setTabIndex(-1);
+            setSearchQuery(nodes[1] === undefined ? "" : nodes[1].textContent);
           } else {
-            setSsearchQuery('');
+            setSearchQuery(undefined);
+            setTabIndex(0);
           }
         }}
       />
