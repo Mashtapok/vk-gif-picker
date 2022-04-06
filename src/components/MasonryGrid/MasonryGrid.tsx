@@ -8,6 +8,10 @@ type MasonryGridProps = {
   itemWidth: number
 }
 
+const fillArray = (length: number): number[] => {
+  return Array.from({ length }).fill(0) as number[];
+};
+
 export const MasonryGrid = memo(({
                                    columns,
                                    gap,
@@ -17,11 +21,7 @@ export const MasonryGrid = memo(({
                                  }: MasonryGridProps) => {
     const containerStyle: CSSProperties = {};
 
-    const fillArray = (length: number): number[] => {
-      return Array.from({ length }).fill(0) as number[];
-    };
-
-    const getChildren = (): ReactNode => {
+    const renderChildren = (): ReactNode => {
       let columnTarget: number;
       const columnHeights: number[] = fillArray(columns);
 
@@ -29,14 +29,17 @@ export const MasonryGrid = memo(({
         const style: CSSProperties = {
           position: "absolute",
         };
+
         columnTarget = columnHeights.indexOf(Math.min(...columnHeights));
         const top = `${columnHeights[columnTarget]}px`;
         const left = `${columnTarget * itemWidth + columnTarget * gap}px`;
         style.transform = `translate3d(${left}, ${top}, 0)`;
         const height = itemHeights[index];
+
         if (height) {
           columnHeights[columnTarget] += height + gap;
         }
+
         return React.cloneElement(child as React.ReactElement, { style });
       });
 
@@ -47,7 +50,7 @@ export const MasonryGrid = memo(({
       return result;
     };
 
-    return <div style={containerStyle}>{getChildren()}</div>;
+    return <div style={containerStyle}>{renderChildren()}</div>;
   },
 );
 

@@ -1,7 +1,7 @@
 import { IGif } from '@giphy/js-types';
 import React, { GetDerivedStateFromProps, PureComponent } from 'react';
 import { getGifHeight } from '../../helpers/gifs';
-import { Gif } from './components/Gif';
+import { Gif } from '../Gif/Gif';
 import { MasonryGrid } from './MasonryGrid';
 
 type State = {

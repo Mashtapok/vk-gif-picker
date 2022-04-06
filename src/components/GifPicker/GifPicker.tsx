@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useHttpRequest } from "../../hooks/useHttpRequest";
 import { Result } from "../../types";
 import { Grid } from "../MasonryGrid/Grid";
@@ -12,6 +12,7 @@ import { debounce } from "../../helpers/shared";
 import { Loader } from "../Loader/Loader";
 
 const GIFS_PAGE_SIZE = 25;
+const QUERY_MAX_LENGTH = 50;
 
 type GifPickerProps = {
   searchQuery: undefined | string,
@@ -113,7 +114,34 @@ export const GifPicker: React.FC<GifPickerProps> = ({ searchQuery, clearInput })
     }
   };
 
-  // TODO: Сделать скрытие попапа при клике вне
+  const pickerContent = useMemo(() => {
+    if (debouncedSearchQuery && debouncedSearchQuery.length > QUERY_MAX_LENGTH) {
+      return <div
+        className="gif-picker--empty">{`Запрос не может быть длиннее ${QUERY_MAX_LENGTH} символов`}</div>;
+    }
+
+    if (error) {
+      return <div
+        className="gif-picker--empty">При загрузке произошла ошибка. Попробуйте ещё раз, либо обновите
+        страницу</div>;
+    }
+
+    if (gifs.length) {
+      return <Grid
+        width={390}
+        columns={3}
+        gap={10}
+        gifs={gifs}
+      />;
+    } else {
+      if (isFetching) {
+        return null;
+      } else {
+        return <div
+          className="gif-picker--empty">По вашему запросу ничего не найдено</div>;
+      }
+    }
+  }, [debouncedSearchQuery, error, gifs, isFetching]);
 
   useEffect(() => {
     loadGifs();
@@ -124,6 +152,8 @@ export const GifPicker: React.FC<GifPickerProps> = ({ searchQuery, clearInput })
     scrollViewportRef.current?.scrollTo(0, 0);
     setPages(1);
   }, [debouncedSearchQuery]);
+
+  // TODO: Вынести svg в спрайт
 
   return (
     <CSSTransition classNames="gif-picker"
@@ -139,15 +169,7 @@ export const GifPicker: React.FC<GifPickerProps> = ({ searchQuery, clearInput })
              onScroll={scrollHandler}
              onClick={clickHandler}
              onKeyDown={keyDownHandler}>
-          {error ? <div
-            className="gif-picker--empty">При загрузке произошла ошибка. Попробуйте ещё раз, либо обновите
-            страницу</div> : gifs.length ? <Grid
-            width={390}
-            columns={3}
-            gap={10}
-            gifs={gifs}
-          /> : isFetching ? null : <div
-            className="gif-picker--empty">По вашему запросу ничего не найдено</div>}
+          {pickerContent}
           <Loader visible={isFetching && !error} />
         </div>
       </div>

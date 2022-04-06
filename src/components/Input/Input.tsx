@@ -34,7 +34,7 @@ export const Input: FC = () => {
       <GifPicker searchQuery={searchQuery} clearInput={clearInput} />
       <div
         ref={inputRef}
-        contentEditable={"plaintext-only" as any} // Предотвращает вставку браузерами различных ненужных тэгов
+        contentEditable={"plaintext-only" as any} // Предотвращает вставку некоторыми браузерами различных ненужных тэгов внутрь contentEditable
         className="input__field"
         placeholder="Напишите сообщение..."
         role="textbox"

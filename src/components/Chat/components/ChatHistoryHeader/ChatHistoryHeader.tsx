@@ -1,8 +1,8 @@
 import React from "react";
-import { getPlural } from "../../../helpers/array";
-import { useMessagesContext } from "../../../hooks/useMessagesContext";
+import { getPlural } from "../../../../helpers/array";
+import { useMessagesContext } from "../../../../hooks/useMessagesContext";
 
-export const HistoryHeader = () => {
+export const ChatHistoryHeader = () => {
   const { selectedMessages, clearSelection, deleteSelectionMessages } = useMessagesContext();
 
   if (!selectedMessages.length) return null;
