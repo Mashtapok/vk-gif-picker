@@ -1,13 +1,11 @@
 {
   "files": {
-    "main.css": "/vk-test-2022/static/css/main.a6ef7fb7.css",
-    "main.js": "/vk-test-2022/static/js/main.8fd81cf8.js",
-    "index.html": "/vk-test-2022/index.html",
-    "main.a6ef7fb7.css.map": "/vk-test-2022/static/css/main.a6ef7fb7.css.map",
-    "main.8fd81cf8.js.map": "/vk-test-2022/static/js/main.8fd81cf8.js.map"
+    "main.css": "/vk-test-2022/static/css/main.e4f48a32.css",
+    "main.js": "/vk-test-2022/static/js/main.8a8addd4.js",
+    "index.html": "/vk-test-2022/index.html"
   },
   "entrypoints": [
-    "static/css/main.a6ef7fb7.css",
-    "static/js/main.8fd81cf8.js"
+    "static/css/main.e4f48a32.css",
+    "static/js/main.8a8addd4.js"
   ]
 }
