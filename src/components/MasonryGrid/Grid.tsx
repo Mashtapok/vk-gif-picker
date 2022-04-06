@@ -1,13 +1,8 @@
-import { IGif } from '@giphy/js-types';
-import React, { GetDerivedStateFromProps, PureComponent } from 'react';
-import { getGifHeight } from '../../helpers/gifs';
-import { Gif } from '../Gif/Gif';
-import { MasonryGrid } from './MasonryGrid';
-
-type State = {
-  gifWidth: number
-  gifs: IGif[]
-}
+import React, { useMemo } from "react";
+import { IGif } from "@giphy/js-types";
+import { getGifHeight } from "../../helpers/gifs";
+import { Gif } from "../Gif/Gif";
+import { MasonryGrid } from "./MasonryGrid";
 
 type Props = {
   gifs: IGif[],
@@ -16,56 +11,33 @@ type Props = {
   gap: number,
 }
 
-const initialState = {
-  gifWidth: 0,
-  gifs: [] as IGif[],
-};
+/* eslint-disable react/prop-types */
+export const Grid = React.memo<Props>(({ gifs, columns, width, gap }) => {
+  // Рассчитываем расстояние между двумя гифками
+  const gapOffset = useMemo(() => gap * (columns - 1), [columns, gap]);
+  // Рассчитываем ширину одной колонки
+  const gifWidth = useMemo(() => Math.floor((width - gapOffset) / columns), [columns, gapOffset, width]);
+  // Получаем высоты каждой гифки в виде [heightImage1, heightImage2, heightImage3, ...]
+  const itemHeights = useMemo(() => gifs.map((gif) => getGifHeight(gif, gifWidth)), [gifWidth, gifs]);
 
-export class Grid extends PureComponent<Props, State> {
-  readonly state = { ...initialState };
+  return (
+    <div style={{ width }}>
+      <MasonryGrid
+        itemHeights={itemHeights}
+        itemWidth={gifWidth}
+        columns={columns}
+        gap={gap}
+      >
+        {gifs.map((gif, index) => (
+          <Gif
+            gif={gif}
+            key={gif.id + String(index)} // Бывают совпадения id в разделе трендов
+            width={gifWidth}
+          />
+        ))}
+      </MasonryGrid>
+    </div>
+  );
+});
 
-  static getDerivedStateFromProps: GetDerivedStateFromProps<Props, State> = (
-    { columns, gap, width },
-    prevState: State,
-  ) => {
-    const gapOffset = gap * (columns - 1);
-    const gifWidth = Math.floor((width - gapOffset) / columns);
-    if (prevState.gifWidth !== gifWidth) {
-      return { gifWidth };
-    }
-    return null;
-  };
-
-  render() {
-    const {
-      gifs,
-      columns,
-      width,
-      gap,
-    } = this.props;
-
-    const { gifWidth } = this.state;
-
-    // Получаем высоты каждой гифки в виде [heightImage1, heightImage2, heightImage3, ...]
-    const itemHeights = gifs.map((gif) => getGifHeight(gif, gifWidth));
-
-    return (
-      <div style={{ width }}>
-        <MasonryGrid
-          itemHeights={itemHeights}
-          itemWidth={gifWidth}
-          columns={columns}
-          gap={gap}
-        >
-          {gifs.map((gif, index) => (
-            <Gif
-              gif={gif}
-              key={gif.id + String(index)} // Бывают совпадения id в разделе трендов
-              width={gifWidth}
-            />
-          ))}
-        </MasonryGrid>
-      </div>
-    );
-  }
-}
+Grid.displayName = "Grid";

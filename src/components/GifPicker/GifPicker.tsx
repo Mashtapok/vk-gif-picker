@@ -5,11 +5,12 @@ import { Grid } from "../MasonryGrid/Grid";
 import { useDebounce } from "../../hooks/useDebounce";
 // @ts-ignore
 import { CSSTransition } from "react-transition-group";
-import "./GifPicker.css";
 import { IGif } from "@giphy/js-types";
 import { useMessagesContext } from "../../hooks/useMessagesContext";
 import { debounce } from "../../helpers/shared";
 import { Loader } from "../Loader/Loader";
+
+import "./GifPicker.css";
 
 const GIFS_PAGE_SIZE = 25;
 const QUERY_MAX_LENGTH = 50;
@@ -40,7 +41,7 @@ export const GifPicker: React.FC<GifPickerProps> = ({ searchQuery, clearInput })
         urlParams: { q: debouncedSearchQuery as string, limit: GIFS_PAGE_SIZE },
       });
       setGifs(data);
-      setTotalCount(pagination.total_count);
+      setTotalCount(pagination?.total_count || 0);
     } else if (debouncedSearchQuery === "") {
       const { data, pagination }: Result = await request("trending", {
         method: "GET",
