@@ -1,6 +1,6 @@
 import { IGif } from "@giphy/js-types";
 import React, { useRef } from "react";
-import { getBestSize, getGifHeight, getRandomColor } from "../../../helpers/gifs";
+import { getBestSize, getGifHeight, getRandomColor } from "../../helpers/gifs";
 import "./Gif.css";
 
 type GifProps = {
