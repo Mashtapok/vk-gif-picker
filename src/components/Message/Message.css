@@ -2,8 +2,12 @@
     position: relative;
     display: flex;
     align-items: flex-end;
-    padding: 10px 16px 10px 30px;
+    padding: 6px 16px 6px 30px;
     cursor: pointer;
+}
+
+.message--gif {
+    padding: 10px 16px 10px 30px;
 }
 
 .message--selected {

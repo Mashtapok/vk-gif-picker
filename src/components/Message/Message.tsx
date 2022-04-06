@@ -21,9 +21,21 @@ export const Message: React.FC<IMessage> = ({ gif, text, created, id }) => {
     ref.current.scrollIntoView({ behavior: "smooth" });
   }, []);
 
+  const classNames = useMemo(() => {
+    let result = 'message';
+
+    if(gif) {
+      result += ' message--gif';
+    }
+    if(isSelected) {
+      result += ' message--selected';
+    }
+    return result;
+  }, [gif, isSelected]);
+
 
   return (
-    <div ref={ref} className={isSelected ? "message message--selected" : "message"} onClick={onClickHandler}>
+    <div ref={ref} className={classNames} onClick={onClickHandler}>
       <SelectedIcon isSelected={isSelected} />
       <div className="message__content">
         {text && <span>{text}</span>}
