@@ -1,4 +1,4 @@
-import { IGif } from "@giphy/js-types";
+import { IGif, IImages } from "@giphy/js-types";
 import { pick } from "./shared";
 import { Rendition } from "../types";
 
@@ -19,44 +19,8 @@ export const getGifHeight = ({ images }: IGif, gifWidth: number) => {
   return 0;
 };
 
-const closestArea = (width: number, height: number, renditions: Rendition[]) => {
-  let currentBest = Infinity;
-  let result: Rendition;
-  // sort the renditions so we can avoid scaling up low resolutions
-  renditions.forEach(rendition => {
-    const widthPercentage = rendition.width / width;
-    const heightPercentage = rendition.height / height;
-    // a width percentage of 1 is exact, 2 is double, .5 half etc
-    const areaPercentage = widthPercentage * heightPercentage;
-    // img could be bigger or smaller
-    const testBest = Math.abs(1 - areaPercentage); // the closer to 0 the better
-    if (testBest < currentBest) {
-      currentBest = testBest;
-      result = rendition;
-    }
-  });
-  return result!;
-};
-
-const findBestfit = (renditions: Rendition[], width: number, height: number) => {
-  let [largestRendition] = renditions;
-  // filter out renditions that are smaller than the target width and height by scaleUpMaxPixels value
-  const testRenditions = renditions.filter(rendition => {
-    if (rendition.width * rendition.height > largestRendition.width * largestRendition.height) {
-      largestRendition = rendition;
-    }
-    return width - rendition.width <= height - rendition.height;
-    // return width - rendition.width <= scaleUpMaxPixels && height - rendition.height <= scaleUpMaxPixels;
-  });
-  // if all are too small, use the largest we have
-  if (testRenditions.length === 0) {
-    return largestRendition;
-  }
-  // find the closest area of the filtered renditions
-  return closestArea(width, height, testRenditions);
-};
-
-export const getBestSize = (images: any, gifWidth: number, gifHeight: number) => {
+export const getBestSize = (images: IImages, gifWidth: number, gifHeight: number) => {
+  // Из всех размеров выбираем подходящие нам
   const matchedSizes = pick(images, [
     "original",
     "fixed_width",
@@ -64,10 +28,47 @@ export const getBestSize = (images: any, gifWidth: number, gifHeight: number) =>
     "fixed_width_small",
     "fixed_height_small",
   ]);
-  const testImages = Object.entries(matchedSizes).map(([sizeName, val]: any) => ({
+  // Добавляем названия размеров в сам объект с ключом sizeName
+  const testImages = Object.entries(matchedSizes).map(([sizeName, val]) => ({
     sizeName,
     ...val,
   }));
 
   return findBestfit(testImages, gifWidth, gifHeight);
+};
+
+const findBestfit = (renditions: Rendition[], width: number, height: number) => {
+  let [largestRendition] = renditions;
+  // Отфильтровываем изображения, которые меньше заданной ширины и высоты
+  const testRenditions = renditions.filter(rendition => {
+    if (rendition.width * rendition.height > largestRendition.width * largestRendition.height) {
+      largestRendition = rendition;
+    }
+    return width - rendition.width <= height - rendition.height;
+  });
+  // Если все изображения оказались меньше заданного, выбираем наибольшее из них
+  if (testRenditions.length === 0) {
+    return largestRendition;
+  }
+  // Находим ближайшее по размерам разрешение из отфильтрованных
+  return findClosestRendition(width, height, testRenditions);
+};
+
+const findClosestRendition = (width: number, height: number, renditions: Rendition[]) => {
+  let currentBest = Infinity;
+  let result: Rendition;
+  // Сортируем по разрешению в порядке убывания, чтобы избежать увеличения малых изображений
+  renditions.forEach(rendition => {
+    const widthPercentage = rendition.width / width;
+    const heightPercentage = rendition.height / height;
+    // процент сходства - 1x1, 2x1 , 1x2 и т.д
+    const areaPercentage = widthPercentage * heightPercentage;
+
+    const testBest = Math.abs(1 - areaPercentage); // чем ближе к 0, тем лучше
+    if (testBest < currentBest) {
+      currentBest = testBest;
+      result = rendition;
+    }
+  });
+  return result!;
 };

@@ -55,7 +55,7 @@ export const useHttpRequest = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, []); //eslint-disable-line
 
   const clearError = useCallback(() => setError(null), []);
 

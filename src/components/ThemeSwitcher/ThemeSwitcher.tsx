@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { IconThemeSwitcher } from "../../icons";
+
 import "./ThemeSwitcher.css";
 
 export const ThemeSwitcher: React.FC = () => {

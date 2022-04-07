@@ -14,15 +14,6 @@ type ParserTypes = {
  * parseText вызывается если кусок текста не входит в регулярку
  * parseElement вызывается если кусок текста уже входит в регулярку
  * Эти функции обязательны и должны вернуть массив, который затем добавится к ответу
- *
- * Пример:
- * const parser = createParser({
- *    regexp: /element/g,
- *    parseText: (value) => [{ type: 'text', value }],
- *    parseElement: (value, match) => [{ type: 'el', value }]
- *  });
- *  const result = parser('text element');
- *  result = [{ type: 'text', value: 'text ' }, { type: 'el', value: 'element' }];
  */
 const createParser = ({
   regexp,
@@ -54,7 +45,6 @@ const createParser = ({
 };
 
 export const gifMarkerParser = createParser({
-  // regexp: /\/gif\b/giy,
   regexp: /\/gif\s/giy,
   parseText: value => [{ type: "text", value }],
   parseElement: value => [{ type: "marker", value }],

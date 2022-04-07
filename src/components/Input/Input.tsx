@@ -2,9 +2,9 @@ import React, { FC, useEffect, useRef, useState } from "react";
 import { GifPicker } from "../GifPicker/GifPicker";
 import { highlight } from "../../helpers/highlight";
 import { restoreCaretPosition, saveCaretPosition } from "../../helpers/caret";
+import { useMessagesContext } from "../../hooks/useMessagesContext";
 
 import "./Input.css";
-import { useMessagesContext } from "../../hooks/useMessagesContext";
 
 export const Input: FC = () => {
   const inputRef = useRef<HTMLDivElement>(null);
@@ -44,6 +44,15 @@ export const Input: FC = () => {
     }
   };
 
+  const focusHandler = (event: React.FocusEvent<HTMLDivElement>) => {
+    restoreCaretPosition(event.currentTarget, caretPosition);
+  };
+
+  const blurHandler = (event: React.FocusEvent<HTMLDivElement>) => {
+    const savedPosition = saveCaretPosition(event.currentTarget);
+    setCaretPosition(savedPosition);
+  };
+
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus();
@@ -61,13 +70,8 @@ export const Input: FC = () => {
         role="textbox"
         tabIndex={tabIndex}
         aria-label="Поле ввода для сообщения"
-        onFocus={({ currentTarget }) => {
-          restoreCaretPosition(currentTarget, caretPosition);
-        }}
-        onBlur={({ currentTarget }) => {
-          const savedPosition = saveCaretPosition(currentTarget);
-          setCaretPosition(savedPosition);
-        }}
+        onFocus={focusHandler}
+        onBlur={blurHandler}
         onKeyDown={keyDownHandler}
         onInput={inputHandler}
       />

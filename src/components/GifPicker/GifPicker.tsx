@@ -9,9 +9,9 @@ import { IGif } from "@giphy/js-types";
 import { useMessagesContext } from "../../hooks/useMessagesContext";
 import { debounce } from "../../helpers/shared";
 import { Loader } from "../Loader/Loader";
+import { IconError, IconSearch } from "../../icons";
 
 import "./GifPicker.css";
-import { IconError, IconSearch } from "../../icons";
 
 const GIFS_PAGE_SIZE = 25;
 const QUERY_MAX_LENGTH = 50;
