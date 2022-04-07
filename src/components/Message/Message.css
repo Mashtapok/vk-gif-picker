@@ -1,8 +1,6 @@
 .message {
   position: relative;
-  display: flex;
-  align-items: flex-end;
-  padding: 6px 16px 6px 30px;
+  padding: 9px 16px 9px 30px;
   cursor: pointer;
 }
 
@@ -15,17 +13,16 @@
 }
 
 .message__content {
-  flex: 1 1 90%;
+  overflow: hidden;
+}
+
+.message__text {
+  word-wrap: break-word;
 }
 
 .message__content img {
   max-width: 95%;
   border-radius: 6px;
-}
-
-.message__timestamp {
-  flex: 0 1 10%;
-  color: var(--text-secondary);
 }
 
 .message__check {

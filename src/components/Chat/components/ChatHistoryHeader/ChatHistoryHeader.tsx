@@ -3,6 +3,8 @@ import { getPlural } from "../../../../helpers/array";
 import { useMessagesContext } from "../../../../hooks/useMessagesContext";
 import { IconDelete } from "../../../../icons";
 
+import "./ChatHistoryHeader.css";
+
 export const ChatHistoryHeader = () => {
   const { selectedMessages, clearSelection, deleteSelectionMessages } = useMessagesContext();
 
@@ -17,25 +19,21 @@ export const ChatHistoryHeader = () => {
   };
 
   return (
-    <div className="history__header">
-      <div
-        className="history__selected-messages"
-        onClick={onClearSelection}
-        title="Снять выделение"
-      >
-        <span className="history__selected-messages-count">{`${selectedMessages.length} ${getPlural(
+    <div className="chat-history__header header">
+      <div className="header__selected-messages" onClick={onClearSelection} title="Снять выделение">
+        <span className="header__selected-messages-count">{`${selectedMessages.length} ${getPlural(
           selectedMessages.length,
           ["сообщение", "сообщения", "сообщений"],
         )}`}</span>
         <button
-          className="history__selected-messages-remove-btn"
+          className="header__selected-messages-remove-btn"
           type="button"
           aria-label="Снять выделение."
         />
       </div>
-      <div className="history__actions">
+      <div className="header__actions">
         <button
-          className="history__action-delete"
+          className="header__action-delete"
           title="Удалить"
           aria-label="Удалить."
           type="button"

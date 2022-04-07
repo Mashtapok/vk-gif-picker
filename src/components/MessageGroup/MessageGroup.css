@@ -1,0 +1,20 @@
+.message-group {
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+    margin-bottom: 8px;
+}
+
+.message-group__stack {
+    flex: 1 1 90%;
+    overflow: hidden;
+}
+
+.message-group__timestamp {
+    position: absolute;
+    right: 16px;
+    top: 9px;
+    flex: 0 1 10%;
+    color: var(--text-secondary);
+    margin-left: 15px;
+}

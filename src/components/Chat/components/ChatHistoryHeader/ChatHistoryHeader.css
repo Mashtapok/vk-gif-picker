@@ -1,0 +1,58 @@
+.chat-history__header {
+    position: absolute;
+    top: 0;
+    height: 48px;
+    width: 100%;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--gray-2);
+    border-radius: 4px 4px 0 0;
+    background-color: var(--gray-1);
+}
+
+.header__selected-messages {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 0 16px;
+}
+
+.header__selected-messages-remove-btn {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    background: var(--remove-icon) no-repeat center;
+    border: 0;
+    margin-left: 7px;
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+.header__selected-messages:hover > .header__selected-messages-remove-btn {
+    opacity: 1;
+}
+
+.header__actions {
+    padding: 10px 16px;
+}
+
+.header__action-delete {
+    width: 36px;
+    height: 26px;
+    padding: 4px 0 0 0;
+    background-color: transparent;
+    color: var(--text-secondary);
+    opacity: 0.7;
+    border: 0;
+    cursor: pointer;
+    transition: transform 200ms;
+}
+
+.header__action-delete:hover {
+    opacity: 1;
+}
+
+.header__action-delete:active {
+    transform: translateY(3px);
+}

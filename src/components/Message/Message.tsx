@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useMemo } from "react";
 import { getRandomColor } from "../../helpers/gifs";
 import { IMessage, useMessagesContext } from "../../hooks/useMessagesContext";
 import { IconSelected } from "../../icons";
@@ -7,12 +7,7 @@ import "./Message.css";
 
 export const Message: React.FC<IMessage> = ({ gif, text, created, id }) => {
   const { selectedMessages, toggleSelection } = useMessagesContext();
-  const ref = useRef<any>();
 
-  const formatedDate = useMemo(
-    () => created.toLocaleTimeString([], { timeStyle: "short" }),
-    [created],
-  );
   const isSelected = useMemo(
     () => Boolean(selectedMessages.find(selected => id === selected.id)),
     [selectedMessages, id],
@@ -21,11 +16,6 @@ export const Message: React.FC<IMessage> = ({ gif, text, created, id }) => {
   const onClickHandler = () => {
     toggleSelection({ gif, text, created, id });
   };
-
-  // Скролл к новому сообщению после его добавления
-  useEffect(() => {
-    ref.current.scrollIntoView({ behavior: "smooth" });
-  }, []);
 
   const classNames = useMemo(() => {
     let result = "message";
@@ -40,12 +30,12 @@ export const Message: React.FC<IMessage> = ({ gif, text, created, id }) => {
   }, [gif, isSelected]);
 
   return (
-    <div ref={ref} className={classNames} onClick={onClickHandler}>
+    <div className={classNames} onClick={onClickHandler}>
       <IconSelected
         className={isSelected ? "message__check message__check--selected" : "message__check"}
       />
       <div className="message__content">
-        {text && <span>{text}</span>}
+        {text && <div className="message__text">{text}</div>}
         {gif && (
           <img
             src={gif.images.fixed_height.webp || gif.images.fixed_height.url}
@@ -59,7 +49,6 @@ export const Message: React.FC<IMessage> = ({ gif, text, created, id }) => {
           />
         )}
       </div>
-      <div className="message__timestamp">{formatedDate}</div>
     </div>
   );
 };
