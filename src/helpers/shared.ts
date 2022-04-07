@@ -1,4 +1,7 @@
-export function debounce<Params extends any[]>(func: (...args: Params) => any, delay: number): (...args: Params) => any {
+export function debounce<Params extends any[]>(
+  func: (...args: Params) => any,
+  delay: number,
+): (...args: Params) => any {
   let timeout: any;
 
   return function executedFunction(...args: Params) {

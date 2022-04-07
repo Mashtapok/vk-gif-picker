@@ -5,29 +5,27 @@ import { Gif } from "../Gif/Gif";
 import { MasonryGrid } from "./MasonryGrid";
 
 type Props = {
-  gifs: IGif[],
-  columns: number,
-  width: number,
-  gap: number,
-}
+  gifs: IGif[];
+  columns: number;
+  width: number;
+  gap: number;
+};
 
 /* eslint-disable react/prop-types */
 export const Grid = React.memo<Props>(({ gifs, columns, width, gap }) => {
   // Рассчитываем расстояние между двумя гифками
   const gapOffset = useMemo(() => gap * (columns - 1), [columns, gap]);
   // Рассчитываем ширину одной колонки
-  const gifWidth = useMemo(() => Math.floor((width - gapOffset) / columns), [columns, gapOffset, width]);
+  const gifWidth = useMemo(
+    () => Math.floor((width - gapOffset) / columns),
+    [columns, gapOffset, width],
+  );
   // Получаем высоты каждой гифки в виде [heightImage1, heightImage2, heightImage3, ...]
-  const itemHeights = useMemo(() => gifs.map((gif) => getGifHeight(gif, gifWidth)), [gifWidth, gifs]);
+  const itemHeights = useMemo(() => gifs.map(gif => getGifHeight(gif, gifWidth)), [gifWidth, gifs]);
 
   return (
     <div style={{ width }}>
-      <MasonryGrid
-        itemHeights={itemHeights}
-        itemWidth={gifWidth}
-        columns={columns}
-        gap={gap}
-      >
+      <MasonryGrid itemHeights={itemHeights} itemWidth={gifWidth} columns={columns} gap={gap}>
         {gifs.map((gif, index) => (
           <Gif
             gif={gif}

@@ -33,7 +33,6 @@
     "build": "react-scripts build --nomaps",
     "predeploy": "npm run build --nomaps",
     "deploy": "gh-pages -d build",
-    "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
