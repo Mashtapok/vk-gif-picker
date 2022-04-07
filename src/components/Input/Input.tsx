@@ -19,7 +19,7 @@ export const Input: FC = () => {
     if (!nodes) return;
 
     if (nodes[0]?.nodeName === "SPAN") {
-      setTabIndex(-1);
+      setTabIndex(-1); // Необходимо, чтобы фокус сразу перемещался на гифки
       setSearchQuery(nodes[1] === undefined ? "" : nodes[1].textContent);
     } else {
       setSearchQuery(undefined);
@@ -57,6 +57,17 @@ export const Input: FC = () => {
     if (inputRef.current) {
       inputRef.current.focus();
     }
+
+    const escapeHandler = (event: KeyboardEvent) => {
+      if (event.code === "Escape") {
+        setSearchQuery(undefined);
+      }
+    };
+    document.addEventListener("keydown", escapeHandler);
+
+    return () => {
+      document.removeEventListener("keydown", escapeHandler);
+    };
   }, []);
 
   return (

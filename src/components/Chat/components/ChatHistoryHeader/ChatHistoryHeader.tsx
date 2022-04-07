@@ -20,7 +20,11 @@ export const ChatHistoryHeader = () => {
 
   return (
     <div className="chat-history__header header">
-      <div className="header__selected-messages" onClick={onClearSelection} title="Снять выделение">
+      <div
+        className="header__selected-messages"
+        onClick={onClearSelection}
+        title="Выделенные сообщения"
+      >
         <span className="header__selected-messages-count">{`${selectedMessages.length} ${getPlural(
           selectedMessages.length,
           ["сообщение", "сообщения", "сообщений"],
@@ -35,7 +39,7 @@ export const ChatHistoryHeader = () => {
         <button
           className="header__action-delete"
           title="Удалить"
-          aria-label="Удалить."
+          aria-label="Удалить выбранные."
           type="button"
           onClick={onDelete}
         >
