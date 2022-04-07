@@ -4,7 +4,8 @@ import { Rendition } from "../types";
 
 export const GRID_COLORS = ["#a86868", "#41af82", "#8549c1", "#5486a0", "#fff35c"];
 
-export const getRandomColor = () => GRID_COLORS[Math.round(Math.random() * (GRID_COLORS.length - 1))];
+export const getRandomColor = () =>
+  GRID_COLORS[Math.round(Math.random() * (GRID_COLORS.length - 1))];
 
 export const getGifHeight = ({ images }: IGif, gifWidth: number) => {
   const { fixed_width } = images;
@@ -22,7 +23,7 @@ const closestArea = (width: number, height: number, renditions: Rendition[]) => 
   let currentBest = Infinity;
   let result: Rendition;
   // sort the renditions so we can avoid scaling up low resolutions
-  renditions.forEach((rendition) => {
+  renditions.forEach(rendition => {
     const widthPercentage = rendition.width / width;
     const heightPercentage = rendition.height / height;
     // a width percentage of 1 is exact, 2 is double, .5 half etc
@@ -37,11 +38,7 @@ const closestArea = (width: number, height: number, renditions: Rendition[]) => 
   return result!;
 };
 
-const findBestfit = (
-  renditions: Rendition[],
-  width: number,
-  height: number,
-) => {
+const findBestfit = (renditions: Rendition[], width: number, height: number) => {
   let [largestRendition] = renditions;
   // filter out renditions that are smaller than the target width and height by scaleUpMaxPixels value
   const testRenditions = renditions.filter(rendition => {
@@ -59,11 +56,7 @@ const findBestfit = (
   return closestArea(width, height, testRenditions);
 };
 
-export const getBestSize = (
-  images: any,
-  gifWidth: number,
-  gifHeight: number,
-) => {
+export const getBestSize = (images: any, gifWidth: number, gifHeight: number) => {
   const matchedSizes = pick(images, [
     "original",
     "fixed_width",

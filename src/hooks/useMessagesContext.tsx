@@ -2,20 +2,20 @@ import { IGif } from "@giphy/js-types";
 import React, { createContext, useCallback, useState } from "react";
 
 export type IMessage = {
-  gif?: IGif,
-  text?: string,
-  created: Date,
-  id: number,
-}
+  gif?: IGif;
+  text?: string;
+  created: Date;
+  id: number;
+};
 
 export type IState = {
-  messages: IMessage[],
-  selectedMessages: IMessage[],
-  addMessage: (newMessage: IMessage) => void,
-  toggleSelection: (newMessage: IMessage) => void,
-  clearSelection: () => void,
-  deleteSelectionMessages: () => void,
-}
+  messages: IMessage[];
+  selectedMessages: IMessage[];
+  addMessage: (newMessage: IMessage) => void;
+  toggleSelection: (newMessage: IMessage) => void;
+  clearSelection: () => void;
+  deleteSelectionMessages: () => void;
+};
 
 const MessagesContext = createContext<IState | null>(null);
 
@@ -23,21 +23,21 @@ const MessagesProvider: React.FC<React.ReactNode> = ({ children }) => {
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [selectedMessages, setSelectedMessages] = useState<IMessage[]>([]);
 
-  const addMessage = useCallback(
-    (newMessage: IMessage) => {
-      setMessages(prevMessages => [...prevMessages, newMessage]);
-    }, []);
+  const addMessage = useCallback((newMessage: IMessage) => {
+    setMessages(prevMessages => [...prevMessages, newMessage]);
+  }, []);
 
-
-  const toggleSelection = useCallback((selectedMessage: IMessage): void => {
-    const copy = [...selectedMessages];
-    if (copy.find(message => message.id === selectedMessage.id)) {
-      setSelectedMessages(copy.filter(message => message.id !== selectedMessage.id));
-    } else {
-      setSelectedMessages([selectedMessage, ...copy]);
-    }
-  }, [selectedMessages]);
-
+  const toggleSelection = useCallback(
+    (selectedMessage: IMessage): void => {
+      const copy = [...selectedMessages];
+      if (copy.find(message => message.id === selectedMessage.id)) {
+        setSelectedMessages(copy.filter(message => message.id !== selectedMessage.id));
+      } else {
+        setSelectedMessages([selectedMessage, ...copy]);
+      }
+    },
+    [selectedMessages],
+  );
 
   const clearSelection = useCallback((): void => {
     setSelectedMessages([]);
@@ -53,7 +53,6 @@ const MessagesProvider: React.FC<React.ReactNode> = ({ children }) => {
     setMessages(newMessages);
   }, [messages, selectedMessages]);
 
-
   return (
     <MessagesContext.Provider
       value={{
@@ -63,7 +62,10 @@ const MessagesProvider: React.FC<React.ReactNode> = ({ children }) => {
         deleteSelectionMessages,
         messages,
         selectedMessages,
-      }}>{children}</MessagesContext.Provider>
+      }}
+    >
+      {children}
+    </MessagesContext.Provider>
   );
 };
 
@@ -76,4 +78,3 @@ const useMessagesContext = () => {
 };
 
 export { MessagesProvider, useMessagesContext };
-

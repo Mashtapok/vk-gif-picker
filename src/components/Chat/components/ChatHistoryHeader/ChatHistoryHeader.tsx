@@ -18,21 +18,30 @@ export const ChatHistoryHeader = () => {
 
   return (
     <div className="history__header">
-      <div className="history__selected-messages" onClick={onClearSelection} title="Снять выделение">
-          <span
-            className="history__selected-messages-count">{`${selectedMessages.length} ${getPlural(selectedMessages.length,
-            ["сообщение", "сообщения", "сообщений"])}`}</span>
-        <button className="history__selected-messages-remove-btn"
-                type="button"
-                aria-label="Снять выделение." />
+      <div
+        className="history__selected-messages"
+        onClick={onClearSelection}
+        title="Снять выделение"
+      >
+        <span className="history__selected-messages-count">{`${selectedMessages.length} ${getPlural(
+          selectedMessages.length,
+          ["сообщение", "сообщения", "сообщений"],
+        )}`}</span>
+        <button
+          className="history__selected-messages-remove-btn"
+          type="button"
+          aria-label="Снять выделение."
+        />
       </div>
       <div className="history__actions">
-        <button className="history__action-delete"
-                title="Удалить"
-                aria-label="Удалить."
-                type="button"
-                onClick={onDelete}>
-         <IconDelete />
+        <button
+          className="history__action-delete"
+          title="Удалить"
+          aria-label="Удалить."
+          type="button"
+          onClick={onDelete}
+        >
+          <IconDelete />
         </button>
       </div>
     </div>

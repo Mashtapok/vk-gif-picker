@@ -1,13 +1,13 @@
 export type ParsedNodeType = {
-  type: string,
-  value: string
-}
+  type: string;
+  value: string;
+};
 
 type ParserTypes = {
-  regexp: RegExp,
-  parseText: (text: string) => ParsedNodeType[],
-  parseElement: (text: string) => ParsedNodeType[]
-}
+  regexp: RegExp;
+  parseText: (text: string) => ParsedNodeType[];
+  parseElement: (text: string) => ParsedNodeType[];
+};
 
 /**
  * Создает парсер текста, который делит текст на блоки с помощью регулярки.
@@ -24,8 +24,12 @@ type ParserTypes = {
  *  const result = parser('text element');
  *  result = [{ type: 'text', value: 'text ' }, { type: 'el', value: 'element' }];
  */
-const createParser = ({ regexp, parseText, parseElement }: ParserTypes): (text: string) => ParsedNodeType[] => {
-  return (text) => {
+const createParser = ({
+  regexp,
+  parseText,
+  parseElement,
+}: ParserTypes): ((text: string) => ParsedNodeType[]) => {
+  return text => {
     const blocks = [];
     let offset = 0;
 

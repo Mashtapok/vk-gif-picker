@@ -6,7 +6,6 @@ import { restoreCaretPosition, saveCaretPosition } from "../../helpers/caret";
 import "./Input.css";
 import { useMessagesContext } from "../../hooks/useMessagesContext";
 
-
 export const Input: FC = () => {
   const inputRef = useRef<HTMLDivElement>(null);
   const [searchQuery, setSearchQuery] = useState<string | undefined>(undefined);
@@ -49,7 +48,6 @@ export const Input: FC = () => {
     if (inputRef.current) {
       inputRef.current.focus();
     }
-
   }, []);
 
   return (

@@ -18,7 +18,6 @@ export const ThemeSwitcher: React.FC = () => {
     document.body.setAttribute("scheme", scheme);
   }, [scheme]);
 
-
   const onThemeToggle = () => {
     setScheme(scheme === "dark" ? "light" : "dark");
   };
@@ -31,7 +30,8 @@ export const ThemeSwitcher: React.FC = () => {
       aria-label={scheme}
       aria-live="polite"
       tabIndex={1}
-      onClick={onThemeToggle}>
+      onClick={onThemeToggle}
+    >
       <IconThemeSwitcher className="sun-and-moon" />
     </button>
   );

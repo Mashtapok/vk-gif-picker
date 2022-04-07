@@ -1,25 +1,19 @@
 import React, { CSSProperties, memo, ReactNode } from "react";
 
 type MasonryGridProps = {
-  columns: number
-  gap: number
-  children: ReactNode
-  itemHeights: number[]
-  itemWidth: number
-}
+  columns: number;
+  gap: number;
+  children: ReactNode;
+  itemHeights: number[];
+  itemWidth: number;
+};
 
 const fillArray = (length: number): number[] => {
   return Array.from({ length }).fill(0) as number[];
 };
 
-
-export const MasonryGrid = memo(({
-                                   columns,
-                                   gap,
-                                   itemWidth,
-                                   itemHeights,
-                                   children,
-                                 }: MasonryGridProps) => {
+export const MasonryGrid = memo(
+  ({ columns, gap, itemWidth, itemHeights, children }: MasonryGridProps) => {
     const containerStyle: CSSProperties = {};
 
     const renderChildren = (): ReactNode => {

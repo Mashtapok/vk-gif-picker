@@ -1,50 +1,50 @@
 .input {
-    position: relative;
-    width: 450px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 13px 16px;
-    background: var(--gray-1);
-    border: 1px solid var(--gray-2);
-    border-radius: 0 0 4px 4px;
-    margin-bottom: 30px;
+  position: relative;
+  width: 450px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 13px 16px;
+  background: var(--gray-1);
+  border: 1px solid var(--gray-2);
+  border-radius: 0 0 4px 4px;
+  margin-bottom: 30px;
 }
 
 .input__field {
-    display: inline-block;
-    width: 100%;
-    padding: 9.5px 12px;
-    background: var(--gray-0);
-    border: 1px solid var(--gray-3);
-    border-radius: 6px;
+  display: inline-block;
+  width: 100%;
+  padding: 9.5px 12px;
+  background: var(--gray-0);
+  border: 1px solid var(--gray-3);
+  border-radius: 6px;
 }
 
 .input__field:focus {
-    outline: none;
+  outline: none;
 }
 
 .input__field:focus:empty::before {
-    color: var(--lightgray-placeholder);
+  color: var(--lightgray-placeholder);
 }
 
 .input__field:empty::before {
-    content: attr(placeholder);
-    color: var(--gray-placeholder);
-    cursor: text;
+  content: attr(placeholder);
+  color: var(--gray-placeholder);
+  cursor: text;
 }
 
 .input__marker {
-    font-weight: 600;
-    font-size: 13px;
-    background: linear-gradient(135deg, #2EE6A8 0%, #3399FF 34.37%, #9933FF 69.27%, #FF3399 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+  font-weight: 600;
+  font-size: 13px;
+  background: linear-gradient(135deg, #2ee6a8 0%, #3399ff 34.37%, #9933ff 69.27%, #ff3399 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 @media screen and (max-width: 470px) {
-    .input {
-        width: 100%;
-        margin-bottom: 0;
-    }
+  .input {
+    width: 100%;
+    margin-bottom: 0;
+  }
 }

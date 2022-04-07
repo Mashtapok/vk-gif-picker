@@ -2,8 +2,8 @@ import React from "react";
 import { Icon } from "./Icon";
 
 type Props = {
-  className?: string
-}
+  className?: string;
+};
 
 export const IconThemeSwitcher: React.FC<Props> = ({ className }) => {
   return (

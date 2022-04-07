@@ -1,12 +1,12 @@
 .chat {
-    display: flex;
-    flex-direction: column;
-    width: 450px;
-    height: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 450px;
+  height: 100%;
 }
 
-@media screen and (max-width: 470px){
-    .chat {
-        width: 100%;
-    }
+@media screen and (max-width: 470px) {
+  .chat {
+    width: 100%;
+  }
 }

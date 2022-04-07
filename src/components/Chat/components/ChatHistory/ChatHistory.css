@@ -1,95 +1,95 @@
 .history {
-    display: flex;
-    flex-direction: column-reverse;
-    height: 85%;
-    margin-top: 30px;
-    background-color: var(--gray-0);
-    position: relative;
-    border: 1px solid var(--gray-2);
-    border-radius: 4px 4px 0 0;
-    border-bottom: none;
+  display: flex;
+  flex-direction: column-reverse;
+  height: 85%;
+  margin-top: 30px;
+  background-color: var(--gray-0);
+  position: relative;
+  border: 1px solid var(--gray-2);
+  border-radius: 4px 4px 0 0;
+  border-bottom: none;
 }
 
 .history__header {
-    position: absolute;
-    top: 0;
-    height: 48px;
-    width: 100%;
-    z-index: 1;
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid var(--gray-2);
-    border-radius: 4px 4px 0 0;
-    background-color: var(--gray-1);
+  position: absolute;
+  top: 0;
+  height: 48px;
+  width: 100%;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--gray-2);
+  border-radius: 4px 4px 0 0;
+  background-color: var(--gray-1);
 }
 
 .history__content {
-    overflow-y: auto;
+  overflow-y: auto;
 }
 
 .history__content:empty::before {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    content: "Сообщений пока нет";
-    color: var(--text-secondary);
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  content: "Сообщений пока нет";
+  color: var(--text-secondary);
 }
 
 .history__selected-messages {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    padding: 0 16px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 0 16px;
 }
 
 .history__selected-messages-remove-btn {
-    position: relative;
-    width: 24px;
-    height: 24px;
-    background: var(--remove-icon) no-repeat center;
-    border: 0;
-    margin-left: 7px;
-    opacity: 0.7;
-    cursor: pointer;
+  position: relative;
+  width: 24px;
+  height: 24px;
+  background: var(--remove-icon) no-repeat center;
+  border: 0;
+  margin-left: 7px;
+  opacity: 0.7;
+  cursor: pointer;
 }
 
 .history__selected-messages:hover > .history__selected-messages-remove-btn {
-    opacity: 1;
+  opacity: 1;
 }
 
 /* TODO: Поправить отступы справа*/
 .history__actions {
-    padding: 10px 16px;
+  padding: 10px 16px;
 }
 
 .history__action-delete {
-    width: 36px;
-    height: 26px;
-    padding: 4px 0 0 0;
-    background-color: transparent;
-    color: var(--text-secondary);
-    opacity: .7;
-    border: 0;
-    cursor: pointer;
-    transition: transform 200ms;
+  width: 36px;
+  height: 26px;
+  padding: 4px 0 0 0;
+  background-color: transparent;
+  color: var(--text-secondary);
+  opacity: 0.7;
+  border: 0;
+  cursor: pointer;
+  transition: transform 200ms;
 }
 
 .history__action-delete:hover {
-    opacity: 1;
+  opacity: 1;
 }
 
 .history__action-delete:active {
-    transform: translateY(3px);
+  transform: translateY(3px);
 }
 
 @media screen and (max-width: 470px) {
-    .history {
-        height: 100%;
-        margin-top: 0;
-    }
+  .history {
+    height: 100%;
+    margin-top: 0;
+  }
 }

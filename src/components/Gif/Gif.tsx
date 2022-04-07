@@ -4,16 +4,12 @@ import { getBestSize, getGifHeight, getRandomColor } from "../../helpers/gifs";
 import "./Gif.css";
 
 type GifProps = {
-  gif: IGif,
-  width: number,
-  style?: any,
-}
+  gif: IGif;
+  width: number;
+  style?: any;
+};
 
-export const Gif = ({
-                      gif,
-                      width,
-                      style,
-                    }: GifProps) => {
+export const Gif = ({ gif, width, style }: GifProps) => {
   const defaultBgColor = useRef(getRandomColor());
   const container = useRef<HTMLDivElement | null>(null);
   const image = useRef<HTMLImageElement | null>(null);

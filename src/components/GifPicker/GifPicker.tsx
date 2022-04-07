@@ -17,9 +17,9 @@ const GIFS_PAGE_SIZE = 25;
 const QUERY_MAX_LENGTH = 50;
 
 type GifPickerProps = {
-  searchQuery: undefined | string,
-  clearInput: () => void
-}
+  searchQuery: undefined | string;
+  clearInput: () => void;
+};
 
 export const GifPicker: React.FC<GifPickerProps> = ({ searchQuery, clearInput }) => {
   const [gifs, setGifs] = useState<IGif[]>([]);
@@ -84,7 +84,11 @@ export const GifPicker: React.FC<GifPickerProps> = ({ searchQuery, clearInput })
       } else {
         const { data }: Result = await request("search", {
           method: "GET",
-          urlParams: { q: debouncedSearchQuery!, limit: GIFS_PAGE_SIZE, offset: pages * GIFS_PAGE_SIZE },
+          urlParams: {
+            q: debouncedSearchQuery!,
+            limit: GIFS_PAGE_SIZE,
+            offset: pages * GIFS_PAGE_SIZE,
+          },
         });
         setGifs(gifs.concat(data));
         setPages(pages + 1);
@@ -118,35 +122,36 @@ export const GifPicker: React.FC<GifPickerProps> = ({ searchQuery, clearInput })
 
   const pickerContent = useMemo(() => {
     if (debouncedSearchQuery && debouncedSearchQuery.length > QUERY_MAX_LENGTH) {
-      return <div
-        className="gif-picker__empty">{`Запрос не может быть длиннее ${QUERY_MAX_LENGTH} символов`}</div>;
+      return (
+        <div className="gif-picker__empty">{`Запрос не может быть длиннее ${QUERY_MAX_LENGTH} символов`}</div>
+      );
     }
 
     if (error) {
-      return <div
-        className="gif-picker__empty">
-        <IconError className="gif-picker__empty-icon" />
-        <p className="gif-picker__empty-text">При загрузке произошла ошибка. Попробуйте ещё раз, либо обновите
-          страницу</p>
-      </div>;
+      return (
+        <div className="gif-picker__empty">
+          <IconError className="gif-picker__empty-icon" />
+          <p className="gif-picker__empty-text">
+            При загрузке произошла ошибка. Попробуйте ещё раз, либо обновите страницу
+          </p>
+        </div>
+      );
     }
 
     if (gifs.length) {
-      return <Grid
-        width={390}
-        columns={3}
-        gap={10}
-        gifs={gifs}
-      />;
+      return <Grid width={390} columns={3} gap={10} gifs={gifs} />;
     } else {
       if (isFetching) {
         return null;
       } else {
-        return <div
-          className="gif-picker__empty">
-          <IconSearch className="gif-picker__empty-icon" />
-          <p className="gif-picker__empty-text gif-picker__empty-text--nowrap">По вашему запросу ничего не найдено</p>
-        </div>;
+        return (
+          <div className="gif-picker__empty">
+            <IconSearch className="gif-picker__empty-icon" />
+            <p className="gif-picker__empty-text gif-picker__empty-text--nowrap">
+              По вашему запросу ничего не найдено
+            </p>
+          </div>
+        );
       }
     }
   }, [debouncedSearchQuery, error, gifs, isFetching]);
@@ -162,19 +167,21 @@ export const GifPicker: React.FC<GifPickerProps> = ({ searchQuery, clearInput })
   }, [debouncedSearchQuery]);
 
   return (
-    <CSSTransition classNames="gif-picker"
-                   in={debouncedSearchQuery !== undefined}
-                   timeout={200}
-                   onExit={restoreStyles}
-                   unmountOnExit>
-      <div className="gif-picker"
-           style={styles}
-           aria-label="Выбор gif изображения.">
-        <div className="gif-picker__viewport"
-             ref={scrollViewportRef}
-             onScroll={scrollHandler}
-             onClick={clickHandler}
-             onKeyDown={keyDownHandler}>
+    <CSSTransition
+      classNames="gif-picker"
+      in={debouncedSearchQuery !== undefined}
+      timeout={200}
+      onExit={restoreStyles}
+      unmountOnExit
+    >
+      <div className="gif-picker" style={styles} aria-label="Выбор gif изображения.">
+        <div
+          className="gif-picker__viewport"
+          ref={scrollViewportRef}
+          onScroll={scrollHandler}
+          onClick={clickHandler}
+          onKeyDown={keyDownHandler}
+        >
           {pickerContent}
           <Loader visible={isFetching && !error} />
         </div>

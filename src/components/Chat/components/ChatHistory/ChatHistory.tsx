@@ -12,7 +12,9 @@ export const ChatHistory = () => {
     <div className="history">
       <ChatHistoryHeader />
       <div className="history__content">
-        {messages.length ? messages.map((message) => <Message {...message} key={message.id} />) : null}
+        {messages.length
+          ? messages.map(message => <Message {...message} key={message.id} />)
+          : null}
       </div>
     </div>
   );
