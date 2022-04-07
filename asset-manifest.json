@@ -1,13 +1,11 @@
 {
   "files": {
-    "main.css": "/vk-test-2022/static/css/main.efad6272.css",
-    "main.js": "/vk-test-2022/static/js/main.956a0c11.js",
-    "static/css/503.37b18857.chunk.css": "/vk-test-2022/static/css/503.37b18857.chunk.css",
-    "static/js/503.b41eeaa3.chunk.js": "/vk-test-2022/static/js/503.b41eeaa3.chunk.js",
+    "main.css": "/vk-test-2022/static/css/main.59121e37.css",
+    "main.js": "/vk-test-2022/static/js/main.dbfaface.js",
     "index.html": "/vk-test-2022/index.html"
   },
   "entrypoints": [
-    "static/css/main.efad6272.css",
-    "static/js/main.956a0c11.js"
+    "static/css/main.59121e37.css",
+    "static/js/main.dbfaface.js"
   ]
 }
