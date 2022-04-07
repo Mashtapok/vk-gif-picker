@@ -11,6 +11,7 @@ import { debounce } from "../../helpers/shared";
 import { Loader } from "../Loader/Loader";
 
 import "./GifPicker.css";
+import { IconError, IconSearch } from "../../icons";
 
 const GIFS_PAGE_SIZE = 25;
 const QUERY_MAX_LENGTH = 50;
@@ -118,13 +119,16 @@ export const GifPicker: React.FC<GifPickerProps> = ({ searchQuery, clearInput })
   const pickerContent = useMemo(() => {
     if (debouncedSearchQuery && debouncedSearchQuery.length > QUERY_MAX_LENGTH) {
       return <div
-        className="gif-picker--empty">{`Запрос не может быть длиннее ${QUERY_MAX_LENGTH} символов`}</div>;
+        className="gif-picker__empty">{`Запрос не может быть длиннее ${QUERY_MAX_LENGTH} символов`}</div>;
     }
 
     if (error) {
       return <div
-        className="gif-picker--empty">При загрузке произошла ошибка. Попробуйте ещё раз, либо обновите
-        страницу</div>;
+        className="gif-picker__empty">
+        <IconError className="gif-picker__empty-icon" />
+        <p className="gif-picker__empty-text">При загрузке произошла ошибка. Попробуйте ещё раз, либо обновите
+          страницу</p>
+      </div>;
     }
 
     if (gifs.length) {
@@ -139,7 +143,10 @@ export const GifPicker: React.FC<GifPickerProps> = ({ searchQuery, clearInput })
         return null;
       } else {
         return <div
-          className="gif-picker--empty">По вашему запросу ничего не найдено</div>;
+          className="gif-picker__empty">
+          <IconSearch className="gif-picker__empty-icon" />
+          <p className="gif-picker__empty-text gif-picker__empty-text--nowrap">По вашему запросу ничего не найдено</p>
+        </div>;
       }
     }
   }, [debouncedSearchQuery, error, gifs, isFetching]);
