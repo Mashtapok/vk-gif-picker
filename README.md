@@ -2,7 +2,7 @@
 
 Этот проект - реализация тестового задания на стажировку VK в комманду веб-мессенджера.
 
-![image](https://i.imgur.com/yY4lW5w.png)
+![image](https://i.imgur.com/3LW80PU.png)
 
 ---
 
