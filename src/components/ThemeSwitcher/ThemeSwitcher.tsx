@@ -28,7 +28,7 @@ export const ThemeSwitcher: React.FC = () => {
       className="theme-switcher"
       id="theme-switcher"
       title="Переключить цветовую схему"
-      aria-label={scheme}
+      aria-label={`${scheme} scheme`}
       aria-live="polite"
       tabIndex={1}
       onClick={onThemeToggle}
