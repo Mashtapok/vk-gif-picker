@@ -9,21 +9,21 @@ type Props = {
 };
 
 export const MessageGroup: React.FC<Props> = ({ group }) => {
-  const formatedDate = useMemo(
+  const formattedDate = useMemo(
     () => group[0].created.toLocaleTimeString([], { timeStyle: "short" }),
     [group],
   );
 
   return (
     <div className="message-group">
-      <div className="message-group__stack">
+      <ul className="message-group__stack">
         {group.map(message => (
           <Message {...message} key={message.id} />
         ))}
-      </div>
-      <div className="message-group__timestamp" aria-label="Время сообщения.">
-        {formatedDate}
-      </div>
+      </ul>
+      <span className="message-group__timestamp" aria-label="Время сообщения.">
+        {formattedDate}
+      </span>
     </div>
   );
 };

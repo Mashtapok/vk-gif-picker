@@ -28,7 +28,6 @@ export const GifPicker: React.FC<GifPickerProps> = ({ searchQuery, clearInput })
   const [totalCount, setTotalCount] = useState<number>(0);
   const [pages, setPages] = useState<number>(1);
   const scrollViewportRef = useRef<HTMLDivElement>(null);
-
   const debouncedSearchQuery = useDebounce(searchQuery, 500);
   const { request, error } = useHttpRequest();
   const { addMessage } = useMessagesContext();

@@ -40,7 +40,7 @@ export const MasonryGrid = memo(
 
       containerStyle.position = "relative";
       containerStyle.width = `${columns * itemWidth + (columns - 1) * gap}px`;
-      containerStyle.height = `${Math.max.apply(Math, columnHeights) - gap}px`;
+      containerStyle.height = `${Math.max(...columnHeights) - gap}px`;
 
       return result;
     };

@@ -3,7 +3,7 @@ import { IconThemeSwitcher } from "../../icons";
 
 import "./ThemeSwitcher.css";
 
-export const ThemeSwitcher: React.FC = () => {
+export const ThemeSwitcher = () => {
   const [scheme, setScheme] = useState("");
 
   useEffect(() => {

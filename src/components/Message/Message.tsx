@@ -30,7 +30,7 @@ export const Message: React.FC<IMessage> = ({ gif, text, created, id }) => {
   }, [gif, isSelected]);
 
   return (
-    <div className={classNames} onClick={onClickHandler}>
+    <li className={classNames} onClick={onClickHandler}>
       <IconSelected
         className={isSelected ? "message__check message__check--selected" : "message__check"}
       />
@@ -49,6 +49,6 @@ export const Message: React.FC<IMessage> = ({ gif, text, created, id }) => {
           />
         )}
       </div>
-    </div>
+    </li>
   );
 };
