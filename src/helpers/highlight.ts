@@ -30,7 +30,6 @@ export const highlight = (input: HTMLDivElement) => {
 export const getTextContent = (node: any): string => {
   if (node.nodeName === "#text") return node.data.replace(/\n/g, "");
   if (node.nodeName === "BR") return "\n";
-  if (node.nodeName === "IMG") return node.alt;
 
   return [...node.childNodes].map(getTextContent).join("");
 };
