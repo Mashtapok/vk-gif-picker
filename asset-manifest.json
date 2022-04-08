@@ -1,11 +1,11 @@
 {
   "files": {
-    "main.css": "/vk-test-2022/static/css/main.0d099a0b.css",
-    "main.js": "/vk-test-2022/static/js/main.0c49bdf4.js",
+    "main.css": "/vk-test-2022/static/css/main.8ba26ea6.css",
+    "main.js": "/vk-test-2022/static/js/main.c79abcfe.js",
     "index.html": "/vk-test-2022/index.html"
   },
   "entrypoints": [
-    "static/css/main.0d099a0b.css",
-    "static/js/main.0c49bdf4.js"
+    "static/css/main.8ba26ea6.css",
+    "static/js/main.c79abcfe.js"
   ]
 }
