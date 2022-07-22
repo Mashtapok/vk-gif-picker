@@ -8,7 +8,7 @@
 
 ## Демо
 
-[Ссылка на приложение](https://mashtapok.github.io/vk-test-2022)
+[Ссылка на приложение](https://mashtapok.github.io/vk-gif-picker/)
 
 ---
 
