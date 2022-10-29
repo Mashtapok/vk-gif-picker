@@ -40,22 +40,6 @@
   white-space: nowrap;
 }
 
-::-webkit-scrollbar {
-  width: 7px;
-}
-
-::-webkit-scrollbar-thumb {
-  height: 25%;
-  background-color: var(--gray-4);
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-::-webkit-scrollbar-track {
-  background: none;
-  margin: 3px 0;
-}
-
 /* styles for react-transition-group*/
 .gif-picker-enter {
   opacity: 0;

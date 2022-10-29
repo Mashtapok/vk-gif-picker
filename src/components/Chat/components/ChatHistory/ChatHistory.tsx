@@ -18,7 +18,7 @@ export const ChatHistory = () => {
     const messagesCopy = [...messages];
 
     messagesCopy.forEach(message => {
-      // Формируем "key" - это строка вида "DD:MMHH:mm"
+      // "key" - это строка вида "DD:MMHH:mm"
       const key = message.created
         .toLocaleString()
         .split(", ")
@@ -27,19 +27,16 @@ export const ChatHistory = () => {
           return accum;
         }, "");
 
-      // Если сообщения с таким же временем существуют, добавляем к ним новое
       if (stacks[key]) {
         stacks = {
           ...stacks,
           [key]: [...stacks[key], message],
         };
-        // Если сообщений с таким же временем нет, делаем отдельную запись с этим временем.
       } else {
         stacks = { ...stacks, [key]: [message] };
       }
     });
 
-    // Из объекта получаем двумерный массив
     return Object.values(stacks);
   }, [messages]);
 
