@@ -11,11 +11,10 @@ type Props = {
   gap: number;
 };
 
-/* eslint-disable react/prop-types */
-export const Grid = React.memo<Props>(({ gifs, columns, width, gap }) => {
-  // Рассчитываем расстояние между двумя гифками
+export const Grid = React.memo<Props>(({ gifs, columns, width, gap }: Props) => {
+  // Расстояние между двумя гифками
   const gapOffset = useMemo(() => gap * (columns - 1), [columns, gap]);
-  // Рассчитываем ширину одной колонки
+  // Ширина одной колонки
   const gifWidth = useMemo(
     () => Math.floor((width - gapOffset) / columns),
     [columns, gapOffset, width],
