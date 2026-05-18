@@ -1,6 +1,6 @@
 import { getTextContent } from "./highlight";
 
-// Сохраняет позицию курсора
+// Saves the caret position
 export const saveCaretPosition = (input: HTMLDivElement) => {
   const range = window.getSelection()!.getRangeAt(0);
   const preCaretRange = range.cloneRange();
@@ -29,7 +29,7 @@ const getCaretNodeAndOffset = (input: HTMLDivElement, caretPosition: number) => 
   return [];
 };
 
-// Устанавливает сохраненное положение курсора
+// Restores the saved caret position
 export const restoreCaretPosition = (input: HTMLDivElement, caretPosition: number) => {
   const [node, offset]: any = getCaretNodeAndOffset(input, caretPosition);
 

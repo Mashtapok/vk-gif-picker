@@ -12,9 +12,9 @@ export function debounce<Params extends any[]>(
 }
 
 /**
- * Выбирает из объекта поля с нужными ключами. Возвращает объект
+ * Picks the given keys from an object and returns a new object with only those fields.
  *
- * Например: pick({bad: ..., good: ..., fine: ..., worth:...} , ['good', 'fine']) вернёт {good: ..., fine:...}
+ * Example: pick({ bad: ..., good: ..., fine: ..., worth: ... }, ['good', 'fine']) => { good: ..., fine: ... }
  */
 export function pick<T extends object, U extends keyof T>(object: T, pick: Array<U>): Pick<T, U> {
   const res: Partial<T> = {};

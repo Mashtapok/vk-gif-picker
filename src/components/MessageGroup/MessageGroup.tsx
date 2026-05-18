@@ -21,7 +21,7 @@ export const MessageGroup: React.FC<Props> = ({ group }) => {
           <Message {...message} key={message.id} />
         ))}
       </ul>
-      <span className="message-group__timestamp" aria-label="Время сообщения.">
+      <span className="message-group__timestamp" aria-label="Message time.">
         {formattedDate}
       </span>
     </div>

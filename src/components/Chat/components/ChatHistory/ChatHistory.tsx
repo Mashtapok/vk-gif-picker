@@ -18,7 +18,7 @@ export const ChatHistory = () => {
     const messagesCopy = [...messages];
 
     messagesCopy.forEach(message => {
-      // "key" - это строка вида "DD:MMHH:mm"
+      // "key" is a string like "DD:MMHH:mm"
       const key = message.created
         .toLocaleString()
         .split(", ")
@@ -40,7 +40,7 @@ export const ChatHistory = () => {
     return Object.values(stacks);
   }, [messages]);
 
-  // Скролл к новому сообщению после его добавления
+  // Scroll to the latest message after it is added
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTo({

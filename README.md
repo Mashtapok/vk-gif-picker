@@ -1,69 +1,68 @@
 # Gif picker
-Приложение представляет собой мини-чат с полем ввода, в котором можно выбирать и отправлять гифки по команде `/gif`
+
+A mini chat app with an input field where you can pick and send GIFs using the `/gif` command.
 
 ![image](https://i.imgur.com/3LW80PU.png)
 
 ---
 
-## Демо
+## Demo
 
-[Ссылка на приложение](https://mashtapok.github.io/vk-gif-picker/)
+[Live app](https://mashtapok.github.io/vk-gif-picker/)
 
 ---
 
-## Стек:
+## Stack
 
 * React
 * TypeScript
 * react-transition-group
 
-## Реализовано:
+## Features
 
-* Активация пикера при вводе команды `/gif` и определение поисковой фразы после пробела
-* Если после команды `/gif` и пробела пользователь не вводит поисковую фразу, то показываются гифки из раздела "Тренды"
-* Подсветка команды `/gif` градиентом
-* Вывод гифок в виде masonry сетки
-* "Бесконечный" скролл с загрузкой гифок
-* Отправка выбранной гифки в список сообщений
-* Отправка текстовых сообщений по нажатию на Enter
-* Группировка сообщений по времени
-* Возможность выделения и удаления сообщений
-* Управление с клавиатуры и доступность
-* Поддержка двух цветовых схем (светлая и тёмная) с автоподстройкой под тему браузера
+* Opens the picker when you type `/gif` and treats the text after a space as the search query
+* Shows trending GIFs when `/gif` is followed by a space but no search query
+* Highlights the `/gif` command with a gradient
+* Masonry grid layout for GIFs
+* Infinite scroll with lazy loading
+* Sends the selected GIF to the message list
+* Sends text messages on Enter
+* Groups messages by time
+* Select and delete messages
+* Keyboard navigation and accessibility
+* Light and dark themes with automatic browser theme detection
 
 ---
 
-### Подсветка команды
+### Command highlighting
 
-Реализацию подсветки команды `/gif` я видел двумя способами:
+I considered two approaches for highlighting `/gif`:
 
-1. Использование нативного `<textarea>` со скрытым текстом внутри и "наложенным" поверх блоком, в котором распарсенное
-   содержимое textarea подсвечивается в случае ввода команды.
-2. Использование атрибута `contentEditable` для создания собственного поля ввода.
+1. A native `<textarea>` with hidden text and an overlay that renders parsed content with highlighting when the command is entered.
+2. A custom input built with the `contentEditable` attribute.
 
-Второй вариант показался мне более сложным и интересным, поэтому я решил попробовать реализовать его.
+I went with the second option because it felt more challenging and interesting to implement.
 
-### Доступность
+### Accessibility
 
-* Поддерживается управление с клавиатуры через клавишу `TAB`. (управление стрелками с masonry grid реализовать довольно
-  сложно и я, к сожалению, не успел придумать решение).
-* Сделана отправка сообщения по нажатию на `Enter`, если гифка находится в фокусе.
-* Закрытие пикера по нажатию на `Escape`
-* Проставлены атрибуты `alt` , `aria-label` и другие aria- атрибуты
+* Keyboard navigation with `TAB` (arrow-key navigation in a masonry grid is quite hard; I did not have time to solve it).
+* Sends a message on `Enter` when a GIF is focused.
+* Closes the picker on `Escape`.
+* Uses `alt`, `aria-label`, and other ARIA attributes.
 
-### Оптимизации
+### Optimizations
 
-* Debounce ввода поисковой фразы
-* Динамическая пагинация при скролле по 25 гифок с дебаунсом;
-* Из API Giphy запрашивается подходящий набор разрешений изображений, тем самым уменьшается размер response
+* Debounced search input
+* Dynamic pagination (25 GIFs per page) with debounced scroll
+* Requests a focused set of image renditions from the Giphy API to reduce response size
 
-### Исходный макет в Figma:
+### Original Figma design
 
-[ссылка](https://www.figma.com/file/tiqe4OR4MQXNZKeB9GmxL3/GIF-picker)
+[link](https://www.figma.com/file/tiqe4OR4MQXNZKeB9GmxL3/GIF-picker)
 
-### Запуск с помощью Docker
+### Running with Docker
 
-1. Необходимо сперва удалить поле "homepage" в package.json (оно используется для gh-pages)
-2. В терминале ввести команду: `docker build -t vk-test .`
-3. Затем: `docker run -dp <ваш_порт>:8080 vk-test`
-4. Открыть приложение в браузере по адресу: `http://localhost:<ваш_порт>`
+1. Remove the `homepage` field from `package.json` first (it is used for gh-pages).
+2. Run: `docker build -t vk-test .`
+3. Then: `docker run -dp <your_port>:8080 vk-test`
+4. Open the app at `http://localhost:<your_port>`

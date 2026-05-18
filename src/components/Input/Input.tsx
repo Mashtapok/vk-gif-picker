@@ -19,7 +19,7 @@ export const Input: FC = () => {
     if (!nodes) return;
 
     if (nodes[0]?.nodeName === "SPAN") {
-      setTabIndex(-1); // Необходимо, чтобы фокус сразу перемещался на гифки
+      setTabIndex(-1); // Move focus to GIFs immediately
       setSearchQuery(nodes[1] === undefined ? "" : nodes[1].textContent);
     } else {
       setSearchQuery(undefined);
@@ -75,12 +75,12 @@ export const Input: FC = () => {
       <GifPicker searchQuery={searchQuery} clearInput={clearInput} />
       <div
         ref={inputRef}
-        contentEditable={"plaintext-only" as any} // Предотвращает вставку некоторыми браузерами различных ненужных тэгов внутрь contentEditable
+        contentEditable={"plaintext-only" as any} // Prevents some browsers from inserting unwanted tags into contentEditable
         className="input__field"
-        placeholder="Напишите сообщение..."
+        placeholder="Type /gif to search GIFs…"
         role="textbox"
         tabIndex={tabIndex}
-        aria-label="Поле ввода для сообщения"
+        aria-label="Message input"
         onFocus={focusHandler}
         onBlur={blurHandler}
         onKeyDown={keyDownHandler}

@@ -8,5 +8,5 @@ type Props = {
 export const Loader: FC<Props> = ({ visible }) => {
   if (!visible) return null;
 
-  return <span className="loader" aria-label="Загрузка." />;
+  return <span className="loader" aria-label="Loading." />;
 };

@@ -7,7 +7,7 @@ export const ThemeSwitcher = () => {
   const [scheme, setScheme] = useState("");
 
   useEffect(() => {
-    // Подстраиваемся под тему браузера
+    // Match the browser color scheme
     if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
       setScheme("dark");
     } else {
@@ -27,7 +27,7 @@ export const ThemeSwitcher = () => {
     <button
       className="theme-switcher"
       id="theme-switcher"
-      title="Переключить цветовую схему"
+      title="Toggle color scheme"
       aria-label={`${scheme} scheme`}
       aria-live="polite"
       tabIndex={1}

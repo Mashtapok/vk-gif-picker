@@ -21,7 +21,7 @@ export const useHttpRequest = () => {
     setLoading(true);
 
     urlParams.api_key = API_KEY;
-    // Сокращает выборку разрешений гифок, которые отдаются с giphy => уменьшает размер response
+    // Limits GIF renditions from Giphy to reduce response size
     // https://developers.giphy.com/docs/optional-settings/#renditions-on-demand
     urlParams.bundle = "messaging_non_clips";
 
@@ -45,7 +45,7 @@ export const useHttpRequest = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.message || "Что-то пошло не так");
+        setError(data.message || "Something went wrong");
       }
 
       return data;

@@ -10,10 +10,10 @@ type ParserTypes = {
 };
 
 /**
- * Создает парсер текста, который делит текст на блоки с помощью регулярки.
- * parseText вызывается если кусок текста не входит в регулярку
- * parseElement вызывается если кусок текста уже входит в регулярку
- * Эти функции обязательны и должны вернуть массив, который затем добавится к ответу
+ * Creates a text parser that splits input into blocks using a regular expression.
+ * parseText is called for text that does not match the regexp
+ * parseElement is called for text that matches the regexp
+ * Both functions must return an array that is appended to the result
  */
 const createParser = ({
   regexp,

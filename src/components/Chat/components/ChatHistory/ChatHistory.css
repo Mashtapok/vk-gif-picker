@@ -25,7 +25,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  content: "Сообщений пока нет";
+  content: "No messages yet";
   color: var(--text-secondary);
 }
 

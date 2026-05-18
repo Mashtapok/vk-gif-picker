@@ -23,23 +23,23 @@ export const ChatHistoryHeader = () => {
       <div
         className="header__selected-messages"
         onClick={onClearSelection}
-        title="Выделенные сообщения"
+        title="Selected messages"
       >
         <span className="header__selected-messages-count">{`${selectedMessages.length} ${getPlural(
           selectedMessages.length,
-          ["сообщение", "сообщения", "сообщений"],
+          ["message", "messages"],
         )}`}</span>
         <button
           className="header__selected-messages-remove-btn"
           type="button"
-          aria-label="Снять выделение."
+          aria-label="Clear selection."
         />
       </div>
       <div className="header__actions">
         <button
           className="header__action-delete"
-          title="Удалить"
-          aria-label="Удалить выбранные."
+          title="Delete"
+          aria-label="Delete selected messages."
           type="button"
           onClick={onDelete}
         >

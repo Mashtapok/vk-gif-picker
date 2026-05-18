@@ -105,7 +105,7 @@ export const GifPicker: React.FC<GifPickerProps> = ({ searchQuery, clearInput })
   };
 
   const clickHandler = (event: React.MouseEvent<HTMLDivElement>) => {
-    // Если клик не по гифке => ничего не предпринимаем
+    // Ignore clicks that are not on a GIF
     if (!(event.target instanceof HTMLImageElement)) {
       return;
     }
@@ -122,7 +122,7 @@ export const GifPicker: React.FC<GifPickerProps> = ({ searchQuery, clearInput })
   const pickerContent = useMemo(() => {
     if (debouncedSearchQuery && debouncedSearchQuery.length > QUERY_MAX_LENGTH) {
       return (
-        <div className="gif-picker__empty">{`Запрос не может быть длиннее ${QUERY_MAX_LENGTH} символов`}</div>
+        <div className="gif-picker__empty">{`Query cannot be longer than ${QUERY_MAX_LENGTH} characters`}</div>
       );
     }
 
@@ -131,7 +131,7 @@ export const GifPicker: React.FC<GifPickerProps> = ({ searchQuery, clearInput })
         <div className="gif-picker__empty">
           <IconError className="gif-picker__empty-icon" />
           <p className="gif-picker__empty-text">
-            При загрузке произошла ошибка. Попробуйте ещё раз, либо обновите страницу
+            Something went wrong while loading. Try again or refresh the page.
           </p>
         </div>
       );
@@ -147,7 +147,7 @@ export const GifPicker: React.FC<GifPickerProps> = ({ searchQuery, clearInput })
           <div className="gif-picker__empty">
             <IconSearch className="gif-picker__empty-icon" />
             <p className="gif-picker__empty-text gif-picker__empty-text--nowrap">
-              По вашему запросу ничего не найдено
+              No GIFs found for your search
             </p>
           </div>
         );
@@ -159,7 +159,7 @@ export const GifPicker: React.FC<GifPickerProps> = ({ searchQuery, clearInput })
     loadGifs();
   }, [loadGifs]);
 
-  // Сброс пагинации и скролл наверх при смене поискового запроса
+  // Reset pagination and scroll to top when the search query changes
   useEffect(() => {
     scrollViewportRef.current?.scrollTo(0, 0);
     setPages(1);
@@ -173,7 +173,7 @@ export const GifPicker: React.FC<GifPickerProps> = ({ searchQuery, clearInput })
       onExit={restoreStyles}
       unmountOnExit
     >
-      <div className="gif-picker" style={styles} aria-label="Выбор gif изображения.">
+      <div className="gif-picker" style={styles} aria-label="GIF picker">
         <div
           className="gif-picker__viewport"
           ref={scrollViewportRef}

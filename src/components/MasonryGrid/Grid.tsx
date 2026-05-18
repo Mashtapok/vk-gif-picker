@@ -12,14 +12,14 @@ type Props = {
 };
 
 export const Grid = React.memo<Props>(({ gifs, columns, width, gap }: Props) => {
-  // Расстояние между двумя гифками
+  // Total horizontal gap between columns
   const gapOffset = useMemo(() => gap * (columns - 1), [columns, gap]);
-  // Ширина одной колонки
+  // Width of a single column
   const gifWidth = useMemo(
     () => Math.floor((width - gapOffset) / columns),
     [columns, gapOffset, width],
   );
-  // Получаем высоты каждой гифки в виде [heightImage1, heightImage2, heightImage3, ...]
+  // Heights per GIF: [height1, height2, height3, ...]
   const itemHeights = useMemo(() => gifs.map(gif => getGifHeight(gif, gifWidth)), [gifWidth, gifs]);
 
   return (
@@ -28,7 +28,7 @@ export const Grid = React.memo<Props>(({ gifs, columns, width, gap }: Props) => 
         {gifs.map((gif, index) => (
           <Gif
             gif={gif}
-            key={gif.id + String(index)} // Бывают совпадения id в разделе трендов
+            key={gif.id + String(index)} // Trending GIFs can share duplicate ids
             width={gifWidth}
           />
         ))}

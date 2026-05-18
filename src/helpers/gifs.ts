@@ -20,7 +20,7 @@ export const getGifHeight = ({ images }: IGif, gifWidth: number) => {
 };
 
 export const getBestSize = (images: IImages, gifWidth: number, gifHeight: number) => {
-  // Из всех размеров выбираем подходящие нам
+  // Pick renditions that fit our use case
   const matchedSizes = pick(images, [
     "original",
     "fixed_width",
@@ -28,7 +28,7 @@ export const getBestSize = (images: IImages, gifWidth: number, gifHeight: number
     "fixed_width_small",
     "fixed_height_small",
   ]);
-  // Добавляем названия размеров в сам объект с ключом sizeName
+  // Attach size names to each rendition as sizeName
   const testImages = Object.entries(matchedSizes).map(([sizeName, val]) => ({
     sizeName,
     ...val,
@@ -39,32 +39,32 @@ export const getBestSize = (images: IImages, gifWidth: number, gifHeight: number
 
 const findBestfit = (renditions: Rendition[], width: number, height: number) => {
   let [largestRendition] = renditions;
-  // Отфильтровываем изображения, которые меньше заданной ширины и высоты
+  // Filter out images smaller than the target width and height
   const testRenditions = renditions.filter(rendition => {
     if (rendition.width * rendition.height > largestRendition.width * largestRendition.height) {
       largestRendition = rendition;
     }
     return width - rendition.width <= height - rendition.height;
   });
-  // Если все изображения оказались меньше заданного, выбираем наибольшее из них
+  // If all images are smaller than the target, use the largest one
   if (testRenditions.length === 0) {
     return largestRendition;
   }
-  // Находим ближайшее по размерам разрешение из отфильтрованных
+  // Pick the closest matching rendition from the filtered set
   return findClosestRendition(width, height, testRenditions);
 };
 
 const findClosestRendition = (width: number, height: number, renditions: Rendition[]) => {
   let currentBest = Infinity;
   let result: Rendition;
-  // Сортируем по разрешению в порядке убывания, чтобы избежать увеличения малых изображений
+  // Prefer larger renditions to avoid upscaling small images
   renditions.forEach(rendition => {
     const widthPercentage = rendition.width / width;
     const heightPercentage = rendition.height / height;
-    // процент сходства - 1x1, 2x1 , 1x2 и т.д
+    // Area ratio match: 1x1, 2x1, 1x2, etc.
     const areaPercentage = widthPercentage * heightPercentage;
 
-    const testBest = Math.abs(1 - areaPercentage); // чем ближе к 0, тем лучше
+    const testBest = Math.abs(1 - areaPercentage); // closer to 0 is better
     if (testBest < currentBest) {
       currentBest = testBest;
       result = rendition;

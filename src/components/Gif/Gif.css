@@ -1,5 +1,5 @@
 .gif-container:focus {
-  /* Резервный стиль для браузеров, которые не поддерживают: focus-visible */
+  /* Fallback for browsers without :focus-visible */
   /*outline: none;*/
   /*background: lightgrey;*/
   box-shadow: 0 0 0 3px #5c9ce6;
@@ -7,7 +7,7 @@
 }
 
 .gif-container:focus:not(:focus-visible) {
-  /* Убираем подсветку фокуса при клике мышью для браузеров, которые поддерживают :focus-visible */
+  /* Hide focus ring on mouse click when :focus-visible is supported */
   box-shadow: none;
   outline: none;
 }

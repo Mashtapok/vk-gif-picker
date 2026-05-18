@@ -1,6 +1,6 @@
 {
   "name": "vk-test-2022",
-  "description": "Тестовое задание для VK",
+  "description": "VK test assignment — GIF picker mini chat",
   "version": "0.1.0",
   "homepage": "https://mashtapok.github.io/vk-gif-picker/",
   "private": true,
