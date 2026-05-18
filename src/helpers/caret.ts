@@ -41,7 +41,7 @@ export const restoreCaretPosition = (input: HTMLDivElement, caretPosition: numbe
     } else if (node.nodeType === Node.TEXT_NODE) {
       range.setStart(node, offset);
     } else {
-      if (node.childNodes[0].nodeName === "BR") {
+      if (node.childNodes[0]?.nodeName === "BR") {
         range.setStart(node.childNodes[0], 0);
       }
       range.setStart(node.childNodes[0], offset);

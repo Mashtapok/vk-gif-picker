@@ -24,6 +24,8 @@ export const highlight = (input: HTMLDivElement) => {
     restoreCaretPosition(input, position);
   }
 
+  normalizeEmptyInput(input);
+
   return transformedNodes;
 };
 
@@ -32,6 +34,13 @@ export const getTextContent = (node: any): string => {
   if (node.nodeName === "BR") return "\n";
 
   return [...node.childNodes].map(getTextContent).join("");
+};
+
+/** Browsers leave `<br>` in contentEditable when cleared; `:empty` then hides the placeholder. */
+export const normalizeEmptyInput = (input: HTMLDivElement) => {
+  if (!getTextContent(input).trim()) {
+    input.innerHTML = "";
+  }
 };
 
 const createSpan = (content: string): HTMLSpanElement => {
