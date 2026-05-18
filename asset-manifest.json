@@ -1,11 +1,13 @@
 {
   "files": {
-    "main.css": "/vk-gif-picker/static/css/main.09ad872d.css",
-    "main.js": "/vk-gif-picker/static/js/main.c79abcfe.js",
-    "index.html": "/vk-gif-picker/index.html"
+    "main.css": "/vk-gif-picker/static/css/main.fa58fb60.css",
+    "main.js": "/vk-gif-picker/static/js/main.bd616e7b.js",
+    "index.html": "/vk-gif-picker/index.html",
+    "main.fa58fb60.css.map": "/vk-gif-picker/static/css/main.fa58fb60.css.map",
+    "main.bd616e7b.js.map": "/vk-gif-picker/static/js/main.bd616e7b.js.map"
   },
   "entrypoints": [
-    "static/css/main.09ad872d.css",
-    "static/js/main.c79abcfe.js"
+    "static/css/main.fa58fb60.css",
+    "static/js/main.bd616e7b.js"
   ]
 }
